@@ -1,0 +1,119 @@
+<div class="set-up" *ngIf="isAdmin == true">
+  <span> <button class='btn btn-primary addButton' (click)="openHsnForm()">Add HSN</button></span>
+  <!-- <span *ngIf="toShow" class="text-success" style="text-align: center;margin: 0 auto; width: 30%;">HSN added
+    successfully</span> -->
+  <ng-template #setUp></ng-template>
+
+</div>
+
+<div class="table-responsive  hsn_table">
+  <table class="table table-hover table-striped">
+    <thead class="thead-inverse">
+      <tr>
+        <th>S.No.</th>
+        <th>Item</th>
+        <th>Item Description</th>
+        <th>HSN No.</th>
+        <th>Gst</th>
+
+        <th *ngIf="userRoleCheck('inventory','update') && userRole ">
+          Edit
+        </th>
+        <th *ngIf="userRoleCheck('inventory','delete') && userRole">
+          Delete
+        </th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p_info of productInfo; let i=index">
+        <td>{{getSerialNumber(i+1)}}</td>
+        <td>{{p_info.Item}}</td>
+        <td>{{p_info.Item_Desc}}</td>
+        <td>{{p_info.HSN_No}}</td>
+        <td>{{p_info.igst}}</td>
+
+        <td *ngIf="userRoleCheck('inventory','update') && userRole">
+          <button type="button" title="Edit Product" (click)="openUpdateProductModal(update,p_info)"
+            class="no-click-backdrop" class="btn btn-primary">
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+          </button>
+        </td>
+
+        <td *ngIf="userRoleCheck('inventory','delete') && userRole">
+          <button class="btn btn-danger mb-2 mr-2" title="Delete Product"
+            (click)="openDeleteProduct(productDelete, p_info)">
+            <i class="fa fa-trash" aria-hidden="true"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<mat-paginator class="paginator--centered mx-auto" [length]="total" [pageIndex]="page-1" [pageSize]="pageSize"
+  [pageSizeOptions]="[ 5,10, 25,50, 100]" (page)="changePage($event)">
+</mat-paginator>
+
+<!-- modal for update product starts -->
+<div class="add-modal">
+  <ng-template #update let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title">Update HSN</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click'); closeFnction();hsnForm.reset()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+
+    </div>
+    <div class="modal-body">
+      <div *ngIf="error"><small style="color: red">{{ error }}</small></div>
+      <form #hsnForm='ngForm' (ngSubmit)="submit(updateHSN)" autocomplete="off">
+        <div class="custom-fieldset">
+          <fieldset class="form-group thisRequired">
+            <label for="HSN name">HSN name:</label>
+            <input type="text" class="form-control" pattern="/^[a-z]+$/i" [(ngModel)]="updateHSN.Item" name="Item">
+          </fieldset>
+
+          <fieldset class="form-group ">
+            <label for="Item description">Item description:</label>
+            <input type="text" class="form-control" [(ngModel)]="updateHSN.Item_Desc" name="Item_Desc">
+          </fieldset>
+
+          <fieldset class="form-group thisRequired ">
+            <label for="HSN name">HSN No:</label>
+            <input type="number" class="form-control" [(ngModel)]="updateHSN.HSN_No" name="HSN_No">
+          </fieldset>
+          <fieldset>
+            <label for="GST" class="thisRequired">GST:</label>
+            <select class="form-control " [(ngModel)]="updateHSN.igst" name="igst">
+              <option value="" disabled selected>GST</option>
+              <option *ngFor="let id of catId" [value]="id.GST">{{ id.GST }}</option>
+            </select>
+          </fieldset>
+          <fieldset [ngStyle]="{'float': 'right', 'width': 'auto', 'padding': '10px'}">
+            <input class="btn btn-primary" type="submit" value="Submit"
+              [disabled]="(!updateHSN.Item || !updateHSN.HSN_No|| !updateHSN.Item_Desc || !updateHSN.igst )">
+          </fieldset>
+        </div>
+        <div class="text-danger" *ngIf="storeMessage !=''">{{storeMessage}}</div>
+      </form>
+    </div>
+  </ng-template>
+</div>
+
+<!-- Delete Modal  03-august regan -->
+<ng-template #productDelete let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">HSN Delete</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click'); closeFnction()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>Are You Sure, You Want to Delete The "{{ productNameForDeleteModal }}"&nbsp; Product!.</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="c()">Yes</button>
+    <button type="button" class="btn btn-light" (click)="d()">No</button>
+  </div>
+</ng-template>
+<!-- /Delete Modal -->

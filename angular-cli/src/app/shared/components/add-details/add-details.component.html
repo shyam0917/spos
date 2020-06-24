@@ -1,0 +1,53 @@
+<div class="container" [@routerTransition]>
+  <div class="row">
+    <div class="col-md-6 mx-auto">
+      <!-- for adding unit -->
+      <div *ngIf="toggleKey=='1'" class="card card-outline-secondary mt-4">
+        <div class="card-header">
+          <h3 class="mb-0">Add Measurement Unit</h3>
+        </div>
+        <div class="card-body p-4">
+          <form class="form" autocomplete="off" #myForm="ngForm">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Insert Measurement Unit*" name="Uom" #Uom='ngModel'
+                [(ngModel)]="uomData" required>
+              <div *ngIf="Uom.errors?.required && Uom.touched" class="text-danger">Field Is Required</div>
+            </div>
+            <div class="float-right">
+              <button type="submit" class="btn btn-primary mx-2 m-7" id="btnLogin" [disabled]="!Uom.valid"
+                (click)="addUom(myForm)">Add</button>
+              <button type="submit" class="btn btn-danger" (click)="myForm.reset()">Clear</button>
+            </div>
+          </form>
+        </div>
+        <!--/card-body-->
+      </div>
+
+      <!-- for adding category -->
+      <div *ngIf="toggleKey=='2'" class="card card-outline-secondary mt-4">
+        <div class="card-header">
+          <h3 class="mb-0">Add Category</h3>
+        </div>
+        <div class="card-body p-4">
+          <form class="form" autocomplete="off" #myForm2="ngForm">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Category Name*" name="cat" #cat='ngModel'
+                [(ngModel)]='CategoryName' required>
+              <div *ngIf="cat.errors?.required && cat.touched" class="text-danger">Field Is Required</div>
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" name="CategoryDescription" placeholder="Category Description"
+                [(ngModel)]='CategoryDescription'>
+            </div>
+            <div class="float-right">
+              <button type="submit" class="btn btn-primary mx-2" id="btnAdd" [disabled]="!cat.valid"
+                (click)="addCategory(myForm2)">Add</button>
+              <button type="submit" class="btn btn-danger" (click)="myForm2.reset()">Clear</button>
+            </div>
+          </form>
+        </div>
+        <!--/card-body-->
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,386 @@
+<nav class="sidebar" [ngClass]="{sidebarPushRight: isActive}">
+    <ul class="list-group">
+        <a routerLink="/dashboard" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-fw fa-dashboard"></i>{{ 'Dashboard' | translate }}
+        </a>
+        <a routerLink="/createStore" [queryParams]="{store: true}" (click)="createStore()"
+            [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="userRoleCheck('store','read')">
+            <i class="fa fa-building-o" aria-hidden="true"></i>{{ 'Store' | translate }}
+        </a>
+        <!-- <a routerLink="/createManager" [routerLinkActive]="['router-link-active']" class="list-group-item" *ngIf="userRoleCheck('manager','read')">
+            <i class="fa fa-fw fa-dashboard"></i>&nbsp;{{ 'Manager' | translate }}
+        </a> -->
+        <!-- <a routerLink="/tableDemo" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-fw fa-dashboard"></i>&nbsp;{{ 'Table Demo' | translate }}
+        </a> -->
+        <a routerLink="/sales" [routerLinkActive]="['router-link-active']" class="list-group-item"
+            *ngIf="userRoleCheck('sales','read') && false">
+            <i class="fa fa-fw fa-dashboard"></i>{{ 'Sales' | translate }}
+        </a>
+        <a routerLink="/purchase" [routerLinkActive]="['router-link-active']" class="list-group-item"
+            *ngIf="userRoleCheck('purchase','read') && false">
+            <i class="fa fa-fw fa-dashboard"></i>{{ 'Purchase' | translate }}
+        </a>
+        <a routerLink="/inventory" [routerLinkActive]="['router-link-active']" class="list-group-item"
+            *ngIf="userRoleCheck('inventory','read')">
+            <i class="fa fa-sitemap" aria-hidden="true"></i>{{ 'Inventory' | translate }}
+        </a>
+        <a routerLink="/outOfStock" [routerLinkActive]="['router-link-active']" class="list-group-item"
+            *ngIf="userRoleCheck('out_of_stock','read') && false">
+            <i class="fa fa-fw fa-dashboard"></i>{{ 'Out of Stock' | translate }}
+        </a>
+
+        <div class="nested-menu">
+            <a class="list-group-item" (click)="addExpandClass('pages')">
+                <span>
+                    <i class="fa fa-file-text-o" aria-hidden="true"></i>{{ 'Reports' | translate }}</span>
+            </a>
+            <li class="nested" [class.expand]="showMenu === 'pages'">
+                <ul class="submenu">
+                    <li>
+                        <a routerLink="/inventoryReport" [routerLinkActive]="['router-link-active']"
+                            class="list-group-item" *ngIf="userRoleCheck('inventory_reports','read')">
+                            <span>{{ 'Inventory Report' | translate }}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/transactionReport" [routerLinkActive]="['router-link-active']"
+                            class="list-group-item" *ngIf="userRoleCheck('transaction_report','read')">
+                            <span>{{ 'Transaction Report' | translate }}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/expiredGoodsReport" [routerLinkActive]="['router-link-active']"
+                            class="list-group-item" *ngIf="userRoleCheck('expired_report','read')">
+                            <span>{{ '(Expired) Aged Inventory Report' | translate }}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/cashReport" [routerLinkActive]="['router-link-active']" class="list-group-item"
+                            *ngIf="userRoleCheck('cash_summary','read')">
+                            <span>{{ 'Cash Summary(Report)' | translate }}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/salesReport" [routerLinkActive]="['router-link-active']" class="list-group-item"
+                            *ngIf="userRoleCheck('sales_report','read')">
+                            <span>{{ 'Sales Report' | translate }}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/customerReport" [routerLinkActive]="['router-link-active']"
+                            class="list-group-item" *ngIf="userRoleCheck('customerwise_report','read')">
+                            <span>{{ 'Customer wise Report' | translate }}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/userBilledReport" [routerLinkActive]="['router-link-active']"
+                            class="list-group-item" *ngIf="userRoleCheck('user_billed_report','read')">
+                            <span>{{ 'User Billed Report' | translate }}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/billTaxReport" [routerLinkActive]="['router-link-active']"
+                            class="list-group-item" *ngIf="userRoleCheck('bill_report','read')">
+                            <span>{{ 'Bill/Transaction Tax Report' | translate }}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/voidBillReport" [routerLinkActive]="['router-link-active']"
+                            class="list-group-item" *ngIf="userRoleCheck('void_bill_report','read')">
+                            <span>{{ 'Void Bill Report' | translate }}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/returnedItemReport" [routerLinkActive]="['router-link-active']"
+                            class="list-group-item" *ngIf="userRoleCheck('returned_item_report','read')">
+                            <span>{{ 'Returned Item Report' | translate }}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/outOfStockReport" [routerLinkActive]="['router-link-active']"
+                            class="list-group-item" *ngIf="userRoleCheck('out_of_stock_report','read')">
+                            <span>{{ 'Out Of Stock Report' | translate }}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/aboutOutOfStockReport" [routerLinkActive]="['router-link-active']"
+                            class="list-group-item" *ngIf="userRoleCheck('about_out_of_stock_report','read')">
+                            <span>{{ 'About to Out Of Stock Report'     | translate }}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/profitReport" [routerLinkActive]="['router-link-active']"
+                            class="list-group-item" *ngIf="userRoleCheck('profit_report','read')">
+                            <span>{{ 'Profit Report' | translate }}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/returnedCashReport" [routerLinkActive]="['router-link-active']"
+                            class="list-group-item" *ngIf="userRoleCheck('returned_cash_report','read')">
+                            <span>{{ 'Returned Cash Report' | translate }}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/storeWiseReport" [routerLinkActive]="['router-link-active']"
+                            class="list-group-item" *ngIf="userRoleCheck('store_wise_report','read')">
+                            <span>{{ 'Store Wise Report' | translate }}</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a routerLink="/allStoreReport" [routerLinkActive]="['router-link-active']"
+                            class="list-group-item" *ngIf="userRoleCheck('all_store_report','read')">
+                            <span>{{'All Store Report' | translate }}</span>
+
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/expenseReport" [routerLinkActive]="['router-link-active']"
+                            class="list-group-item" *ngIf="userRoleCheck('expense_report','read')">
+                            <span>{{'Expense Report' | translate }}</span>
+
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/managerWiseReport" [routerLinkActive]="['router-link-active']"
+                            class="list-group-item" *ngIf="userRoleCheck('manager_wise_report','read')">
+                            <span>{{'Manager Wise Report' | translate }}</span>
+
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/sellUsingCardReport" [routerLinkActive]="['router-link-active']"
+                            class="list-group-item" *ngIf="userRoleCheck('sell_using_card_report','read')">
+                            <span>{{'Sell Using Card Report' | translate }}</span>
+
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/gstReport" [routerLinkActive]="['router-link-active']" class="list-group-item"
+                            *ngIf="userRoleCheck('gst_report','read')">
+                            <span>{{'GST Report' | translate }}</span>
+
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/specialDiscountReport" [routerLinkActive]="['router-link-active']"
+                            class="list-group-item" *ngIf="userRoleCheck('special_discount_report','read')">
+                            <span>{{'Special Discount Report' | translate }}</span>
+
+                        </a>
+                    </li>
+                    <!-- expiredGoodsReport -->
+                </ul>
+            </li>
+        </div>
+
+        <div class="nested-menu">
+            <a class="list-group-item" (click)="addExpandClass('setup')">
+                <span>
+                    <i class="fa fa-cogs" aria-hidden="true"></i>{{ 'Setup' | translate }}</span>
+            </a>
+            <li class="nested" [class.expand]="showMenu === 'setup'">
+                <ul class="submenu">
+                    <li>
+                        <a routerLink="/hsnCode" [routerLinkActive]="['router-link-active']" class="list-group-item"
+                            *ngIf="userRoleCheck('inventory_reports','read')">
+                            <span>{{ 'HSN Code' | translate }}</span>
+                        </a>
+                    </li>
+                    <!-- expiredGoodsReport -->
+                </ul>
+            </li>
+        </div>
+
+        <div class="nested-menu">
+            <a class="list-group-item" (click)="addExpandClass('add')">
+                <span>
+                    <i class="fa fa-plus"></i>&nbsp; {{ 'Add' | translate }}</span>
+            </a>
+            <li class="nested" [class.expand]="showMenu === 'add'">
+                <ul class="submenu">
+                    <li>
+                        <a [routerLink]="['/add-details',1]" [routerLinkActive]="['router-link-active']"
+                            class="list-group-item">
+                            <span>{{ 'Measurement Unit' | translate }}</span>
+                        </a>
+                        <a [routerLink]="['/add-details',2]" [routerLinkActive]="['router-link-active']"
+                            class="list-group-item">
+                            <span>{{ 'Category' | translate }}</span>
+                        </a>
+                    </li>
+                    <!-- expiredGoodsReport -->
+                </ul>
+            </li>
+        </div>
+        <!-- 
+              
+        <a routerLink="/posDetails" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-fw fa-dashboard"></i>&nbsp;{{ 'POS Details' | translate }}
+        </a>
+        <a routerLink="/customersDetails" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-fw fa-dashboard"></i>&nbsp;{{ 'Customers Details' | translate }}
+        </a>
+        <a routerLink="/inventoryDetails" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-fw fa-dashboard"></i>&nbsp;{{ 'Inventory Details' | translate }}
+        </a>
+        <a routerLink="/teamDetails" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-fw fa-dashboard"></i>&nbsp;{{ 'Team Details' | translate }}
+        </a>
+        <a routerLink="/profitDetails" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-fw fa-dashboard"></i>&nbsp;{{ 'Profit Details' | translate }}
+        </a>
+        <a routerLink="/storeDetails" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-fw fa-dashboard"></i>&nbsp;{{ 'Store Details' | translate }}
+        </a> -->
+
+
+
+        <!-- this is for ADMIN role only -->
+        <!-- <a routerLink="/createStore" [routerLinkActive]="['router-link-active']" class="list-group-item"> 
+            <i class="fa fa-fw fa-dashboard"></i>&nbsp;{{ 'Manager Details' | translate }}
+        </a> -->
+
+
+
+        <!-- <a [routerLink]="['/charts']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-fw fa-bar-chart-o"></i>&nbsp;{{ 'Charts' | translate }}
+        </a>
+        <a [routerLink]="['/tables']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-fw fa-table"></i>&nbsp;{{ 'Tables' | translate }}
+        </a> -->
+
+        <!-- <a [routerLink]="['/forms']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-fw fa-edit"></i>&nbsp;{{ 'Forms' | translate }}
+        </a>
+        <a [routerLink]="['/bs-element']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-fw fa-desktop"></i>&nbsp;{{ 'Boostrap Element' | translate }}
+        </a>
+        <a [routerLink]="['/grid']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-fw fa-wrench"></i>&nbsp;{{ 'Boostrap Grid' | translate }}
+        </a>
+        <a [routerLink]="['/components']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-th-list"></i>&nbsp;{{ 'Component' | translate }}
+        </a>
+
+
+        <a [routerLink]="['/blank-page']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-file-o"></i>&nbsp;{{ 'Blank Page' | translate }}
+        </a>
+        <a class="list-group-item more-themes" href="http://www.strapui.com/">
+            {{ 'More Theme' | translate }}
+        </a> -->
+
+
+        <div class="collapse navbar-collapse custom-hidden custom-side-login">
+            <!-- <form class="form-inline my-2 my-lg-0">
+              <input class="form-control mr-sm-2" type="text" placeholder="{{ 'Search' | translate }}" >
+          </form> -->
+            <ul class="navbar-nav ml-auto mt-2 mt-md-0 custom-hidden">
+                <!-- <li class="nav-item hidden-lg-down">
+                  <a href="https://github.com/start-angular/SB-Admin-BS4-Angular-2/archive/master.zip" class="nav-link btn mt-1" role="button" style="padding: .375rem 1rem !important; border-color: #999;">{{ 'Download Now' | translate }}</a>
+              </li> &nbsp; -->
+
+
+                <!-- <li class="nav-item">
+                  <a href="javascript:void(0)" class="nav-link mt-1" style="padding: 0.375rem 1rem !important; border-color: #999;" (click)="rltAndLtr()">RTL/LTR</a>
+              </li> &nbsp; -->
+
+                <!-- <div class="dropdown"> -->
+                <!-- <li class="nav-item dropdown" ngbDropdown>
+                
+                  <a class="nav-link" href="javascript:void(0)" ngbDropdownToggle>
+                      <i class="fa fa-envelope"></i>
+                      <b class="caret"></b>
+                      <span class="sr-only">(current)</span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-right messages">
+                      <li class="media">
+                          <img class="d-flex align-self-center mr-3" src="http://i.huffpost.com/gadgets/slideshows/461162/slide_461162_6224974_sq50.jpg"
+                              alt="Generic placeholder image">
+                          <div class="media-body">
+                              <h5 class="mt-0 mb-1">John Smith</h5>
+                              <p class="small text-muted">
+                                  <i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
+                              <p class="last"> Lorem ipsum dolor sit amet, consectetur...</p>
+                          </div>
+                      </li>
+                      <li class="media">
+                          <img class="d-flex align-self-center mr-3" src="http://i.huffpost.com/gadgets/slideshows/461162/slide_461162_6224974_sq50.jpg"
+                              alt="Generic placeholder image">
+                          <div class="media-body">
+                              <h5 class="mt-0 mb-1">John Smith</h5>
+                              <p class="small text-muted">
+                                  <i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
+                              <p class="last"> Lorem ipsum dolor sit amet, consectetur...</p>
+                          </div>
+                      </li>
+                      <li class="media">
+                          <img class="d-flex align-self-center mr-3" src="http://i.huffpost.com/gadgets/slideshows/461162/slide_461162_6224974_sq50.jpg"
+                              alt="Generic placeholder image">
+                          <div class="media-body">
+                              <h5 class="mt-0 mb-1">John Smith</h5>
+                              <p class="small text-muted">
+                                  <i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
+                              <p class="last"> Lorem ipsum dolor sit amet, consectetur...</p>
+                          </div>
+                      </li>
+                  </ul>
+              </li> -->
+                <!-- <li class="nav-item dropdown" ngbDropdown>
+                  <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle>
+                      <i class="fa fa-bell"></i>
+                      <b class="caret"></b>
+                      <span class="sr-only">(current)</span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-right"> -->
+                <!-- <a href="javascript:void(0)" class="dropdown-item">Pending Task
+                          <span class="badge badge-info">6</span>
+                      </a>
+                      <a href="javascript:void(0)" class="dropdown-item">In queue
+                          <span class="badge badge-info"> 13</span>
+                      </a> -->
+                <!-- <a href="javascript:void(0)" class="dropdown-item">Mail
+                          <span class="badge badge-info"> 45</span>
+                      </a>
+                      <li class="dropdown-divider"></li>
+                      <a href="javascript:void(0)" class="dropdown-item">View All</a>
+                  </ul>
+              </li> -->
+                <!-- <li class="nav-item dropdown" ngbDropdown>
+                  <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle>
+                      <i class="fa fa-language"></i> {{ 'Language' | translate }}
+                      <b class="caret"></b>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right">
+                      <a class="dropdown-item" href="javascript:void(0)" (click)="changeLang('en')">{{ 'English' | translate }}</a> -->
+                <!-- <a class="dropdown-item" href="javascript:void(0)" (click)="changeLang('fr')">{{ 'French' | translate }}</a>
+                      <a class="dropdown-item" href="javascript:void(0)" (click)="changeLang('ur')">{{ 'Urdu' | translate }}</a>
+                      <a class="dropdown-item" href="javascript:void(0)" (click)="changeLang('es')">{{ 'Spanish' | translate }}</a>
+                      <a class="dropdown-item" href="javascript:void(0)" (click)="changeLang('it')">{{ 'Italian' | translate }}</a>
+                      <a class="dropdown-item" href="javascript:void(0)" (click)="changeLang('fa')">{{ 'Farsi' | translate }}</a> -->
+                <!-- </div>
+              </li> -->
+                <li class="nav-item dropdown" ngbDropdown>
+                    <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle>
+                        <i class="fa fa-user"></i> {{userName}}
+                        <b class="caret"></b>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right ">
+                        <!-- <a class="dropdown-item" href="javascript:void(0)">
+                          <i class="fa fa-fw fa-user"></i> {{ 'Profile' | translate }}</a>
+                      <a class="dropdown-item" href="javascript:void(0)">
+                          <i class="fa fa-fw fa-envelope"></i> {{ 'Inbox' | translate }}</a>
+                      <a class="dropdown-item" href="javascript:void(0)">
+                          <i class="fa fa-fw fa-gear"></i> {{ 'Settings' | translate }}</a> -->
+                        <a class="dropdown-item" [routerLink]="['/login']" (click)="onLoggedout()">
+                            <i class="fa fa-fw fa-power-off"></i> {{ 'Log Out' | translate }} </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+
+    </ul>
+</nav>

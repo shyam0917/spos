@@ -1,0 +1,86 @@
+<div class="pos-f-t fixed-top header">
+    <nav class="navbar navbar-inverse bg-inverse navbar-toggleable-md">
+        <button class="navbar-toggler navbar-toggler-right handburger" (click)="toggleSidebar()">
+            <span></span>
+        </button>
+
+        <a class="navbar-brand" routerLink="/dashboard">
+            <img class="user-avatar" src="assets/images/shipgig-logo.png" width="150px" />
+        </a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ml-auto mt-2 mt-md-0">
+                <li class="nav-item dropdown logout-dropdown" ngbDropdown>
+                    <a href="javascript:void(0)" class="btn  mr-1 logout mt-0" style="position: relative;"
+                        ngbDropdownToggle>
+                        <i class="fa fa-user"></i> {{userName}}
+                        <b class="caret"></b>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right sidebar-top mt-0">
+                        <a *ngIf="role == 'SADM' || role == 'ADM'" class="dropdown-item set-pointer" data-toggle="modal"
+                            data-target="#ResetModal">
+                            <i class="fa fa-pencil-square-o"></i> {{ 'Change Password' | translate }}</a>
+                        <a class="dropdown-item" [routerLink]="['/login']" (click)="onLoggedout()">
+                            <i class="fa fa-fw fa-power-off"></i> {{ 'Log Out' | translate }} </a>
+
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+
+<!-- Modal for Reset Password -->
+<div class="modal fade" id="ResetModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Change Password</h5>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="resetPassForm">
+                    <div class="container testing">
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                <label>Current Password</label>
+                                <span class="astris"><b>*</b></span>
+                                <div class="form-group">
+                                    <input type="text" class="form-control pw" name="currentPass"
+                                        formControlName="currentPass">
+                                </div>
+                                <label>New Password</label>
+                                <span class="astris"><b>*</b></span>
+                                <div class="form-group">
+                                    <input type="text" class="form-control pw" name="newPass" formControlName="newPass">
+                                </div>
+                                <label>Confirm Password</label>
+                                <span class="astris"><b>*</b></span>
+                                <div class="form-group">
+                                    <input type="text" class="form-control pw" name="confirmPass"
+                                        formControlName="confirmPass">
+                                </div>
+                                <!-- <div>
+                    <button class="btn btn-primary" type="submit" value="submit" [disabled]="!resetPassForm.valid">Submit</button>
+                  </div> -->
+                                <div>
+                                    <!-- <a [routerLink]="['/dashboard']">Cancel</a> -->
+                                </div>
+
+                                <div *ngIf="message" style="color: red;">{{message}}</div>
+                                <div *ngIf="!message" style="color:white;">Hii</div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-cancel" data-dismiss="modal" #closeBtn
+                    (click)="onClose()">Cancel</button>
+                <button type="button" class="btn-submit" [disabled]="!resetPassForm.valid"
+                    (click)="onSubmit()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+fieldset {
+    width: 50%;
+    float: left;
+    padding: 0.5em;
+}
+
+fieldset:nth-child(odd) {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.thisRequired::before {
+    content: "*";
+    color: red;
+}
+
+.forError {
+    float: left;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+
+.close {
+    color: #d9534f;
+    font-size: 36px;
+    outline: none;
+    opacity: 1;
+    width: 46px;
+  }

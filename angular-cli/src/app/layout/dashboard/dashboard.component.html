@@ -1,0 +1,762 @@
+<div [@routerTransition] class="fullPage">
+    <!-- <h2 class="text-muted">Dashboard
+        <small>Statistics Overview</small>
+    </h2> -->
+
+    <!-- Button trigger modal -->
+    <div class="dashboard-box">
+        <div class="row">
+            <div class="col-xl-3 col-md-6">
+                <div class="card">
+                    <div class="row card-box">
+                        <div class="col-sm-8 col-8 text-left">
+                            <div class="d-block blue-box">Total Stock</div>
+                            <div class="d-block-huge visible"> <i class="fa fa-inr" aria-hidden="true"></i> {{sumStock}}
+                            </div>
+                        </div>
+                        <div class="col-sm-4 col-4 text-right">
+                            <img src="assets/images/dashboard-icon1.png" class="dashboard-icon" />
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="float-left">View Details </span>
+                        <a class="float-right card-inverse blue-arrow" routerLink="/inventoryReport"
+                            [routerLinkActive]="['router-link-active']">
+                            <span><i class="fa fa-arrow-circle-right"></i></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6">
+                <div class="card">
+                    <div class="row card-box">
+                        <div class="col-sm-8 col-8 text-left">
+                            <div class="d-block green-box">Total Sales</div>
+                            <div class="d-block-huge"><i class="fa fa-inr" aria-hidden="true"></i> {{sumSales}}</div>
+                        </div>
+                        <div class="col-sm-4 col-4 text-right">
+                            <img src="assets/images/dashboard-icon2.png" class="dashboard-icon" />
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="float-left">View Details </span>
+                        <a class="float-right card-inverse green-arrow" routerLink="/salesReport"
+                            [routerLinkActive]="['router-link-active']">
+                            <span><i class="fa fa-arrow-circle-right"></i></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6">
+                <div class="card">
+                    <div class="row card-box">
+                        <div class="col-sm-8 col-8 text-left">
+                            <div class="d-block orange-box">Total Expense</div>
+                            <div class="d-block-huge"><i class="fa fa-inr" aria-hidden="true"></i>{{sumExpense}}</div>
+                        </div>
+                        <div class="col col-sm-4 col-4 text-right">
+                            <img src="assets/images/dashboard-icon3.png" class="dashboard-icon" />
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="float-left">View Details </span>
+                        <a class="float-right card-inverse orange-arrow" routerLink="/expenseReport"
+                            [routerLinkActive]="['router-link-active']">
+                            <span><i class="fa fa-arrow-circle-right"></i></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6">
+                <div class="card">
+                    <div class="row card-box">
+                        <div class="col-sm-8 col-8 text-left">
+                            <div class="d-block red-box">Expired Product</div>
+                            <div class="d-block-huge"><i class="fa fa-inr" aria-hidden="true"></i>{{sumOutofStock}}
+                            </div>
+                        </div>
+                        <div class="col col-sm-4 col-4 text-right">
+                            <img src="assets/images/dashboard-icon4.png" class="dashboard-icon" />
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="float-left">View Details </span>
+                        <a class="float-right card-inverse red-arrow" routerLink="/expiredGoodsReport"
+                            [routerLinkActive]="['router-link-active']">
+                            <span><i class="fa fa-arrow-circle-right"></i></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+    <!-- <div class="row">
+        <div class="col-xl-3 col-lg-6">
+            <app-stat [bgClass]="'card-primary'" [icon]="'fa-comments'" [count]="sumStock" [label]="'Total Stock'" [url]="'/inventoryReport'"></app-stat>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+            <app-stat [bgClass]="'card-success'" [icon]="'fa-tasks'" [count]="'Rs. '+ sumSales" [label]="'Total Sales'" [url]="'/salesReport'"></app-stat>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+            <app-stat [bgClass]="'card-warning'" [icon]="'fa-shopping-cart'" [count]="'Rs. '+sumExpense" [label]="'Total Expenses'" [url]="'/expenseReport'"></app-stat>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+            <app-stat [bgClass]="'card-danger'" [icon]="'fa-support'" [count]="sumOutofStock" [label]="'Expired Products'" [url]="'/expiredGoodsReport'"></app-stat>
+        </div>
+    </div>
+    <br>
+    <br> -->
+
+    <div class="row dashboard-graph">
+        <div class="col-lg-12">
+            <div class="row">
+                <div id="profit" style=" margin: 0 auto" class="col-lg-6">
+                    <div id="transaction-graph"></div>
+                </div>
+
+                <div id="topProducts" style=" margin: 0 auto" class="col-lg-6">
+                    <div id="sales-graph"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="all-reports">
+        <h4>All Reports</h4>
+        <div class="row">
+            <div class="col-lg-2">
+                <div class="report-box">
+                    <a href="">
+                        <img src="assets/images/report-inventory.png"/>
+                         Inventory report
+                    </a>
+                </div>                        
+            </div> 
+            <div class="col-lg-2">
+                <div class="report-box">
+                    <a href="">
+                        <img src="assets/images/report-inventory.png"/>
+                        Transaction report 
+                    </a>
+                </div>                        
+            </div>  
+            <div class="col-lg-2">
+                <div class="report-box">
+                    <a href="">
+                        <img src="assets/images/report-inventory.png"/>
+                        (Expired) Aged Inventory Report
+                    </a>
+                </div>                        
+            </div>  
+            <div class="col-lg-2">
+                <div class="report-box">
+                    <a href="">
+                        <img src="assets/images/report-inventory.png"/>
+                        Cash Summary(Report)
+                    </a>
+                </div>                        
+            </div>  
+            <div class="col-lg-2">
+                <div class="report-box">
+                    <a href="">
+                        <img src="assets/images/report-inventory.png"/>
+                        Sales Report
+                    </a>
+                </div>                        
+            </div>  
+            <div class="col-lg-2">
+                <div class="report-box">
+                    <a href="">
+                        <img src="assets/images/report-inventory.png"/>
+                        Customer wise Report
+                    </a>
+                </div>                        
+            </div>  
+            <div class="col-lg-2">
+                <div class="report-box">
+                    <a href="">
+                        <img src="assets/images/report-inventory.png"/>
+                        User Billed Report 
+                    </a>
+                </div>                        
+            </div> 
+            <div class="col-lg-2">
+                <div class="report-box">
+                    <a href="">
+                        <img src="assets/images/report-inventory.png"/>
+                         Bill/Transaction Tax Report 
+                    </a>
+                </div>                        
+            </div>   
+            
+            <div class="col-lg-2">
+                <div class="report-box">
+                    <a href="">
+                        <img src="assets/images/report-inventory.png"/>
+                         Void Bill Report
+                    </a>
+                </div>                        
+            </div>   
+            <div class="col-lg-2">
+                <div class="report-box">
+                    <a href="">
+                        <img src="assets/images/report-inventory.png"/>
+                        Returned Item Report
+                    </a>
+                </div>                        
+            </div>   
+            <div class="col-lg-2">
+                <div class="report-box">
+                    <a href="">
+                        <img src="assets/images/report-inventory.png"/>
+                        Out Of Stock Report 
+                    </a>
+                </div>                        
+            </div>   
+            <div class="col-lg-2">
+                <div class="report-box">
+                    <a href="">
+                        <img src="assets/images/report-inventory.png"/>
+                        About to Out Of Stock Report
+                    </a>
+                </div>                        
+            </div>   
+            <div class="col-lg-2">
+                <div class="report-box">
+                    <a href="">
+                        <img src="assets/images/report-inventory.png"/>
+                        Profit Report
+                    </a>
+                </div>                        
+            </div>   
+            <div class="col-lg-2">
+                <div class="report-box">
+                    <a href="">
+                        <img src="assets/images/report-inventory.png"/>
+                        Returned Cash Report
+                    </a>
+                </div>                        
+            </div>   
+            <div class="col-lg-2">
+                <div class="report-box">
+                    <a href="">
+                        <img src="assets/images/report-inventory.png"/>
+                        Store Wise Report
+                    </a>
+                </div>                        
+            </div>   
+            <div class="col-lg-2">
+                <div class="report-box">
+                    <a href="">
+                        <img src="assets/images/report-inventory.png"/>
+                         All Store Report 
+                    </a>
+                </div>                        
+            </div>   
+            <div class="col-lg-2">
+                <div class="report-box">
+                    <a href="">
+                        <img src="assets/images/report-inventory.png"/>
+                        Expense Report
+                    </a>
+                </div>                        
+            </div>   
+            <div class="col-lg-2">
+                <div class="report-box">
+                    <a href="">
+                        <img src="assets/images/report-inventory.png"/>
+                        Manager Wise Report
+                    </a>
+                </div>                        
+            </div>   
+            <div class="col-lg-2">
+                <div class="report-box">
+                    <a href="">
+                        <img src="assets/images/report-inventory.png"/>
+                        Sell Using Card Report
+                    </a>
+                </div>                        
+            </div>   
+            <div class="col-lg-2">
+                <div class="report-box">
+                    <a href="">
+                        <img src="assets/images/report-inventory.png"/>
+                        GST Report
+                    </a>
+                </div>                        
+            </div> 
+            <div class="col-lg-2">
+                <div class="report-box">
+                    <a href="">
+                        <img src="assets/images/report-inventory.png"/>
+                        Special Discount Report
+                    </a>
+                </div>                        
+            </div>                   
+        </div>
+     </div> -->
+
+    <div class="all-reports">
+        <h4>All Reports</h4>
+        <div class="row">
+            <div class="col-xl-3 col-md-6">
+                <div class="report-mainbox">
+                    <h5>Stock Reports</h5>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-6">
+                            <div class="report-box">
+                                <a routerLink="/inventoryReport" [routerLinkActive]="['router-link-active']">
+                                    <img src="assets/images/report-inventory.png" />
+                                    Inventory report
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-6">
+                            <div class="report-box">
+                                <a routerLink="/customerReport" [routerLinkActive]="['router-link-active']">
+                                    <img src="assets/images/report-inventory.png" />
+                                    Customer wise Report
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-6">
+                            <div class="report-box">
+                                <a routerLink="/allStoreReport" [routerLinkActive]="['router-link-active']">
+                                    <img src="assets/images/report-inventory.png" />
+                                    All Store Report
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-6">
+                            <div class="report-box">
+                                <a routerLink="/managerWiseReport" [routerLinkActive]="['router-link-active']">
+                                    <img src="assets/images/report-inventory.png" />
+                                    Manager Wise Report
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-6">
+                            <div class="report-box">
+                                <a routerLink="/voidBillReport" [routerLinkActive]="['router-link-active']">
+                                    <img src="assets/images/report-inventory.png" />
+                                    Void Bill Report
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-6">
+                            <div class="report-box">
+                                <a routerLink="/returnedCashReport" [routerLinkActive]="['router-link-active']">
+                                    <img src="assets/images/report-inventory.png" />
+                                    Returned Cash Report
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-6">
+                            <div class="report-box">
+                                <a routerLink="/returnedItemReport" [routerLinkActive]="['router-link-active']">
+                                    <img src="assets/images/report-inventory.png" />
+                                    Returned Item Report
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+                <div class="report-mainbox">
+                    <h5>Sales Reports</h5>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-6">
+                            <div class="report-box">
+                                <a routerLink="/transactionReport" [routerLinkActive]="['router-link-active']">
+                                    <img src="assets/images/report-inventory.png" />
+                                    Transaction Report
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-6">
+                            <div class="report-box">
+                                <a routerLink="/cashReport" [routerLinkActive]="['router-link-active']">
+                                    <img src="assets/images/report-inventory.png" />
+                                    Cash Summary (Report)
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-6">
+                            <div class="report-box">
+                                <a routerLink="/salesReport" [routerLinkActive]="['router-link-active']">
+                                    <img src="assets/images/report-inventory.png" />
+                                    Sales Report
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-6">
+                            <div class="report-box">
+                                <a routerLink="/userBilledReport" [routerLinkActive]="['router-link-active']">
+                                    <img src="assets/images/report-inventory.png" />
+                                    User Billed Report
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-6">
+                            <div class="report-box">
+                                <a routerLink="/billTaxReport" [routerLinkActive]="['router-link-active']">
+                                    <img src="assets/images/report-inventory.png" />
+                                    Bill / Transaction Tax Report
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-6">
+                            <div class="report-box">
+                                <a routerLink="/profitReport" [routerLinkActive]="['router-link-active']">
+                                    <img src="assets/images/report-inventory.png" />
+                                    Profit Report
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-6">
+                            <div class="report-box">
+                                <a routerLink="/sellUsingCardReport" [routerLinkActive]="['router-link-active']">
+                                    <img src="assets/images/report-inventory.png" />
+                                    Sell Using Card Report
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+                <div class="report-mainbox">
+                    <h5>Expense Reports</h5>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-6">
+                            <div class="report-box">
+                                <a routerLink="/customerReport" [routerLinkActive]="['router-link-active']">
+                                    <img src="assets/images/report-inventory.png" />
+                                    Customer wise Report
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-6">
+                            <div class="report-box">
+                                <a routerLink="/storeWiseReport" [routerLinkActive]="['router-link-active']">
+                                    <img src="assets/images/report-inventory.png" />
+                                    Store Wise Report
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-6">
+                            <div class="report-box">
+                                <a routerLink="/allStoreReport" [routerLinkActive]="['router-link-active']">
+                                    <img src="assets/images/report-inventory.png" />
+                                    All Store Report
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-6">
+                            <div class="report-box">
+                                <a routerLink="/expenseReport" [routerLinkActive]="['router-link-active']">
+                                    <img src="assets/images/report-inventory.png" />
+                                    Expense Report
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-6">
+                            <div class="report-box">
+                                <a routerLink="/gstReport" [routerLinkActive]="['router-link-active']">
+                                    <img src="assets/images/report-inventory.png" />
+                                    GST Report
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-6">
+                            <div class="report-box">
+                                <a routerLink="/specialDiscountReport" [routerLinkActive]="['router-link-active']">
+                                    <img src="assets/images/report-inventory.png" />
+                                    Special Discount Report
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+                <div class="report-mainbox">
+                    <h5>Expired Product</h5>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-6">
+                            <div class="report-box">
+                                <a routerLink="/outOfStockReport" [routerLinkActive]="['router-link-active']">
+                                    <img src="assets/images/report-inventory.png" />
+                                    Out Of Stock Report
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-6">
+                            <div class="report-box">
+                                <a routerLink="/expiredGoodsReport" [routerLinkActive]="['router-link-active']">
+                                    <img src="assets/images/report-inventory.png" />
+                                    (Expired) Aged Inventory Report
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-6">
+                            <div class="report-box">
+                                <a routerLink="/aboutOutOfStockReport" [routerLinkActive]="['router-link-active']">
+                                    <img src="assets/images/report-inventory.png" />
+                                    About to Out Of Stock Report
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- <div class="">
+        <h4 class="text-center">All Reports</h4>
+        <hr>
+        <div class="row" style="font-size: 0.9em;">
+
+            <a routerLink="/inventoryReport" [routerLinkActive]="['router-link-active']" class="list-group-item col-xs-4 col-sm-4" *ngIf="userRoleCheck('inventory_reports','read')">
+                <span>{{ 'Inventory Report' }}</span>
+            </a>
+            <a routerLink="/transactionReport" [routerLinkActive]="['router-link-active']" class="list-group-item col-xs-4 col-sm-4" *ngIf="userRoleCheck('transaction_report','read')">
+                <span>{{ 'Transaction Report' }}</span>
+            </a>
+            <a routerLink="/expiredGoodsReport" [routerLinkActive]="['router-link-active']" class="list-group-item col-xs-4 col-sm-4" *ngIf="userRoleCheck('expired_report','read')">
+                <span>{{ '(Expired) Aged Inventory Report' }}</span>
+            </a>
+            <a routerLink="/cashReport" [routerLinkActive]="['router-link-active']" class=" list-group-item col-xs-4 col-sm-4" *ngIf="userRoleCheck('cash_summary','read')">
+                <span>{{ 'Cash Summary (Report)' }}</span>
+            </a>
+            <a routerLink="/salesReport" [routerLinkActive]="['router-link-active']" class=" list-group-item col-xs-4 col-sm-4" *ngIf="userRoleCheck('sales_report','read')">
+                <span>{{ 'Sales Report' }}</span>
+            </a>
+            <a routerLink="/customerReport" [routerLinkActive]="['router-link-active']" class=" list-group-item col-xs-4 col-sm-4" *ngIf="userRoleCheck('customerwise_report','read')">
+                <span>{{ 'Customer wise Report' }}</span>
+            </a>
+            <a routerLink="/userBilledReport" [routerLinkActive]="['router-link-active']" class=" list-group-item col-xs-4 col-sm-4" *ngIf="userRoleCheck('user_billed_report','read')">
+                <span>{{ 'User Billed Report' }}</span>
+            </a>
+            <a routerLink="/billTaxReport" [routerLinkActive]="['router-link-active']" class=" list-group-item col-xs-4 col-sm-4" *ngIf="userRoleCheck('bill_report','read')">
+                <span>{{ 'Bill / Transaction Tax Report' }}</span>
+            </a>
+            <a routerLink="/voidBillReport" [routerLinkActive]="['router-link-active']" class=" list-group-item col-xs-4 col-sm-4" *ngIf="userRoleCheck('void_bill_report','read')">
+                <span>{{ 'Void Bill Report' }}</span>
+            </a>
+            <a routerLink="/returnedItemReport" [routerLinkActive]="['router-link-active']" class=" list-group-item col-xs-4 col-sm-4" *ngIf="userRoleCheck('returned_item_report','read')">
+                <span>{{ 'Returned Item Report' }}</span>
+            </a>
+            <a routerLink="/outOfStockReport" [routerLinkActive]="['router-link-active']" class=" list-group-item col-xs-4 col-sm-4" *ngIf="userRoleCheck('out_of_stock_report','read')">
+                <span>{{ 'Out Of Stock Report' }}</span>
+            </a>
+            <a routerLink="/aboutOutOfStockReport" [routerLinkActive]="['router-link-active']" class=" list-group-item col-xs-4 col-sm-4" *ngIf="userRoleCheck('about_out_of_stock_report','read')">
+                <span>{{ 'About to Out Of Stock Report' }}</span>
+            </a>
+            <a routerLink="/profitReport" [routerLinkActive]="['router-link-active']" class=" list-group-item col-xs-4 col-sm-4" *ngIf="userRoleCheck('profit_report','read')">
+                <span>{{ 'Profit Report' }}</span>
+            </a>
+            <a routerLink="/returnedCashReport" [routerLinkActive]="['router-link-active']" class=" list-group-item col-xs-4 col-sm-4" *ngIf="userRoleCheck('returned_cash_report','read')">
+                <span>{{ 'Returned Cash Report' }}</span>
+            </a>
+            <a routerLink="/storeWiseReport" [routerLinkActive]="['router-link-active']" class=" list-group-item col-xs-4 col-sm-4" *ngIf="userRoleCheck('store_wise_report','read')">
+                <span>{{ 'Store Wise Report' }}</span>
+            </a>
+            <a routerLink="/allStoreReport" [routerLinkActive]="['router-link-active']" class=" list-group-item col-xs-4 col-sm-4" *ngIf="userRoleCheck('all_store_report','read')">
+                <span>{{'All Store Report' }}</span>
+            </a>
+            <a routerLink="/expenseReport" [routerLinkActive]="['router-link-active']" class=" list-group-item col-xs-4 col-sm-4" *ngIf="userRoleCheck('expense_report','read')">
+                <span>{{'Expense Report' }}</span>
+            </a>
+            <a routerLink="/managerWiseReport" [routerLinkActive]="['router-link-active']" class=" list-group-item col-xs-4 col-sm-4" *ngIf="userRoleCheck('manager_wise_report','read')">
+                <span>{{'Manager Wise Report' }}</span>
+            </a>
+            <a routerLink="/sellUsingCardReport" [routerLinkActive]="['router-link-active']" class=" list-group-item col-xs-4 col-sm-4" *ngIf="userRoleCheck('sell_using_card_report','read')">
+                <span>{{'Sell Using Card Report' }}</span>
+            </a>
+            <a routerLink="/gstReport" [routerLinkActive]="['router-link-active']" class=" list-group-item col-xs-4 col-sm-4" *ngIf="userRoleCheck('gst_report','read')">
+                <span>{{'GST Report' }}</span>
+            </a>
+            <a routerLink="/specialDiscountReport" [routerLinkActive]="['router-link-active']" class=" list-group-item col-xs-4 col-sm-4" *ngIf="userRoleCheck('special_discount_report','read')">
+                <span>{{'Special Discount Report' }}</span>
+            </a>
+        </div>
+    </div> -->
+
+
+
+    <!-- Modal for Reset Password -->
+    <!-- <div class="modal fade" id="ResetModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Reset Password</h5>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="resetPassForm">
+                        <div class="container testing">
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <label>Current Password</label>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control pw" name="currentPass" formControlName="currentPass">
+                                    </div>
+                                    <label>New Password</label>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control pw" name="newPass" formControlName="newPass">
+                                    </div>
+                                    <label>Confirm Password</label>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control pw" name="confirmPass" formControlName="confirmPass">
+                                    </div>
+                          
+                                    <div>
+                                    </div>
+
+                                    <div *ngIf="message" style="color: red;">{{message}}</div>
+                                    <div *ngIf="!message" style="color:white;">Hii</div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-cancel" data-dismiss="modal" #closeBtn (click)="onClose()">Cancel</button>
+                    <button type="button" class="btn-submit" [disabled]="!resetPassForm.valid" (click)="onSubmit()">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- Delete Store-Pos Modal  09-august regan
+    <ng-template #storePosDelete let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h4 class="modal-title">Store POS Delete</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are You Sure, <br>
+          You Want To Delete The POS_ID ==> <br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"{{ strorePOS_IDForstorePosDeleteModal }}" <br>
+          Of <br>
+          STORE_NAME ==> &nbsp;&nbsp;{{ storeNameForstorePosDeleteModal }}!.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="c()">Yes</button>
+        <button type="button" class="btn btn-light" (click)="d()">No</button>
+      </div>
+    </ng-template>
+    /Delete Store-Pos Modal -->
+
+    <!-- <div class="row" >
+    <div class="col-md-8">
+            <br/>
+            <br/>
+            <h4 class="text-primary">POS Devices</h4>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                          <th>Store Name</th>
+                          <th>POS ID</th>
+                          <th>Store ID</th>
+                          <th>Status</th>
+                          <th *ngIf="userRoleCheck('pos_crud','create')">Edit</th>
+                          <th *ngIf="userRoleCheck('pos_crud','create')">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let pos of pos_list">
+                            <td>{{pos.storeName}}</td>
+                            <td>{{pos.pos_ID}}</td>
+                            <td>{{pos.Store_ID}}</td>
+
+                            <td><ui-switch></ui-switch></td>
+
+                            <td style="cursor: pointer;" *ngIf="userRoleCheck('pos_crud','create')"><button class="btn btn-primary" (click)="editPOSForm(pos)"><i class="fa fa-pencil" aria-hidden="true"></i></button></td>
+
+                            <td style="cursor: pointer;" *ngIf="userRoleCheck('pos_crud','create')"><button class="btn btn-danger" (click)="openDeletePosID(storePosDelete, pos)"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+        </div>
+        <div class="col-md-4" *ngIf="userRoleCheck('pos_crud','create')">
+        <form class="form-horizontal col-md-12" role="form" *ngIf="addPosForm">
+                <br/>
+                <br/>
+                <div class="form-group">
+                        <h4 class="text-primary">Add POS Device</h4>
+                </div>
+
+                <div class="form-group">
+                        <input type="number" class="form-control" placeholder="Store ID" [(ngModel)]="store_id" name="store_id"/>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="POS ID" [(ngModel)]="pos_id" name="pos_id"/>
+                </div> 
+
+                <div class="form-group" *ngIf="addPosFlag">
+                    <h4 class="text-success">POS device added successfully</h4>
+                </div>
+
+                <div class="form-group" *ngIf="addPosFlagFail">
+                        <h4 class="text-danger">POS device add failed !</h4>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-10 col-sm-offset-2">
+                        <button type="button" class="btn btn-primary" [disabled]="store_id == undefined || pos_id == undefined || pos_id == ''" (click)="addPOS({'store_id':store_id, 'pos_id': pos_id})">Add Device</button>
+                    </div>
+                </div>
+        </form>
+
+        <form class="form-horizontal col-md-12" role="form" *ngIf="!addPosForm">
+                <br/>
+                <br/>
+                <div class="form-group">
+                        <h4 class="text-primary">Edit POS Device</h4>
+                </div>
+
+                <div class="form-group">
+                        <input type="number" class="form-control" placeholder="Store ID" [(ngModel)]="data.Store_ID" name="store_id"/>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="POS ID" [(ngModel)]="data.pos_ID" name="pos_id"/>
+                </div>
+
+                <div class="form-group" *ngIf="editPosFlag">
+                    <h4 class="text-success">POS device edited successfully</h4>
+                </div>
+
+                <div class="form-group" *ngIf="editPosFlagFail">
+                        <h4 class="text-danger">POS device edit failed !</h4>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-10 col-sm-offset-2">
+                        <button type="button" class="btn btn-primary" [disabled]="data.Store_ID == undefined || data.pos_ID == undefined || data.pos_ID == ''" (click)="editPOS(data)">Edit Device</button>
+
+                        <button type="button" class="btn btn-default" (click)="addPosForm = !addPosForm; store_id = undefined; pos_id = undefined; editPosFlag = false; editPosFlagFail = false; addPosFlag = false; addPosFlagFail = false;">Cancel</button>
+                    </div>
+                </div>
+        </form>
+        </div>
+    </div> -->

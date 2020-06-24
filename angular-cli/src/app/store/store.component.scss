@@ -1,0 +1,223 @@
+.table-fixed thead {
+  width: 97%;
+}
+
+.table-fixed tbody {
+  height: 230px;
+  overflow-y: auto;
+  width: 100%;
+}
+
+.pos_table {
+  max-height: 400px;
+  display: block;
+  overflow-y: scroll;
+}
+
+@media (min-width: 576px) {
+  .modal-dialog {
+    margin: 4px auto;
+  }
+}
+
+.i-size i {
+  font-size: 1.5em;
+}
+
+.store {
+  text-align: center;
+  margin-bottom: 19px;
+}
+
+.alignCancel {
+  float: right;
+}
+
+.Select-menu-outer {
+  bottom: auto;
+  bottom: 100%;
+}
+
+// .dropdown-menu {
+//   transform: translate3d(5px, 35px, 0px) !important;
+// }
+
+.form-group {
+  position: relative;
+}
+
+.form-groupnew {
+  position: none !important;
+}
+
+.astris {
+  color: red;
+  position: absolute;
+  right: 1px;
+  top: -5px;
+}
+
+.astrisSec {
+  color: red;
+  position: absolute;
+  right: -7px;
+  top: -5px;
+}
+
+.optionSelection {
+  height: 7px !important;
+  overflow: scroll;
+}
+
+.optionSelectionItem {
+  height: 50px !important;
+  overflow: scroll;
+}
+
+.set-time {
+  width: auto;
+  display: inline-block;
+  margin-left: 5px;
+}
+
+.alignTimeField {
+  width: fit-content;
+  display: inline-block !important;
+}
+
+.close {
+  color: #d9534f !important;
+  font-size: 36px;
+  outline: none !important;
+  opacity: 1 !important;
+  width: 46px;
+}
+
+
+
+mat-paginator.mat-paginator.paginator--centered {
+  display: flex;
+  justify-content: center;
+  width: fit-content;
+  color: white;
+  font-size: 15px;
+  font-family: "Open Sans", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.mat-primary {
+  color: white;
+}
+
+::ng-deep .mat-option-text {
+  color: white !important;
+}
+
+::ng-deep .mat-select-arrow {
+  color: white !important;
+}
+
+::ng-deep .mat-form-field-infix,
+.mat-form-field-ripple {
+  color: white !important;
+}
+
+::ng-deep .mat-form-field-ripple {
+  background-color: white !important;
+}
+
+.close {
+  color: #d9534f;
+  font-size: 36px;
+  outline: none;
+  opacity: 1;
+  width: 46px;
+}
+
+// hr {
+//   border: 1px solid lightblue !important;
+// }
+
+.set-hide label {
+  visibility: hidden !important;
+}
+
+body {
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.set-category {
+  position: absolute;
+  z-index: 100;
+}
+
+.set-stateCategory {
+  position: absolute;
+  z-index: 100;
+  width: auto;
+}
+
+.set-Categorybtn {
+  width: fit-content;
+}
+
+.set-Categorybtn {
+  background: #216cff;
+  color: #fff;
+}
+
+.set-Categorybtn:focus {
+  background: #216cff;
+  color: #fff;
+  outline: none;
+}
+
+@media screen and (min-width: 320px) and (max-width:576px) {
+  .set-category {
+    width: auto;
+  }
+
+  .set-Categorybtn {
+    margin-top: 28px !important;
+  }
+
+  select.form-control:focus {
+    z-index: 1 !important;
+    position: relative;
+  }
+}
+
+/* Tooltip container */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+  /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+.storeAdd {
+  width: 40%;
+}
+
+.btn-store {
+  border-radius: 10px;
+}

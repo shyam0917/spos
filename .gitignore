@@ -1,0 +1,8 @@
+/node_modules
+node_modules
+/angular-cli/node_modules
+/angular-cli/dist
+/dist
+/public
+angular-cli/node_modules
+.env

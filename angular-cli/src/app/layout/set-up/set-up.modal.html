@@ -1,0 +1,61 @@
+<div class="add-modal">
+    <div class="modal-header">
+        <h4 class="modal-title">Add HSN</h4>
+        <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+
+    </div>
+    <div class="modal-body">
+        <div *ngIf="error"><small style="color: red">{{ error }}</small></div>
+        <form [formGroup]="gstForm" (ngSubmit)="submit()" autocomplete="off">
+            <div class="custom-fieldset">
+                <fieldset class="form-group thisRequired">
+                    <label for="HSN Code">HSN No:</label>
+                    <input type="text" class="form-control" formControlName="HSN_No" name="HSN_No">
+                </fieldset>
+
+                <fieldset class="form-group thisRequired">
+                    <label for="HSN name">HSN name:</label>
+                    <input type="text" class="form-control" formControlName="Item" name="Item">
+                </fieldset>
+    
+                <fieldset class="form-group ">
+                    <label for="Item description">Item description:</label>
+                    <input type="text" formControlName="Item_Desc" name="Item_Desc" class="form-control">
+                </fieldset>
+                <fieldset>
+                    <label for="GST" class="thisRequired">GST:</label>
+                    <select class="form-control " formControlName="igst" name="igst">
+                        <option value="" disabled selected>GST</option>
+                        <option *ngFor="let id of catId" [value]="id.GST">{{ id.GST }}</option>
+                    </select>
+                </fieldset>
+                <fieldset class="form-group" [hidden]="true">
+                    <label for="gst_Cat_ID">Category ID:</label>
+                    <input type="text" class="form-control" formControlName="gst_Cat_ID" name="gst_Cat_ID">
+                </fieldset>
+                <fieldset class="form-group" [hidden]="true">
+                    <label for="sgst">Sgst:</label>
+                    <input type="text" class="form-control" formControlName="sgst" name="sgst">
+                </fieldset>
+                <fieldset class="form-group" [hidden]="true">
+                    <label for="cgst">Cgst:</label>
+                    <input type="text" class="form-control" formControlName="cgst" name="cgst">
+                </fieldset>
+                <br>
+                <fieldset [ngStyle]="{'float': 'right', 'width': 'auto', 'padding': '10px'}">
+                    <input class="btn btn-primary" type="submit" value="Submit" [disabled]="gstForm.invalid">
+                </fieldset>
+                <br>
+                <div class="form-control-feedback forError" *ngIf="gstForm.get('HSN_No').errors && gstForm.get('HSN_No').errors['pattern']">
+                    <p class="text-danger" style="display: inline-block;"><small>Please enter numbers in HSN_No</small></p>
+                </div>
+                <br>
+
+            </div>
+
+        </form>
+    </div>
+
+</div>

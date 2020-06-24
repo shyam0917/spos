@@ -1,0 +1,566 @@
+<div class="login-page" [@routerTransition]>
+  <div class="row">
+    <!-- added by regan 10-august -->
+    <div class="col-lg-12">
+      <!-- added by regan 10-august -->
+      <div class="card mb-3 common-inner">
+        <!-- added by regan 10-august -->
+        <div class="card-block table-responsive custom-product-table">
+          <h2 class="heading">Store</h2>
+          <!-- added by regan 10-august -->
+          <div class="inner-btn" *ngIf="userRoleCheck('store','create')">
+            <button type="button" class="btn-add"
+              (click)="createStoreFormHide = !createStoreFormHide; createStoreFormFunction()"
+              *ngIf="createStoreFormHide"><i class="fa fa-plus-square-o" aria-hidden="true">&nbsp;</i> Create
+              Store</button>
+          </div>
+          <div class="inner-btn" *ngIf="userRoleCheck('store','update')">
+            <button type="button" class="btn-add" (click)="createStoreFormHide = !createStoreFormHide"
+              *ngIf="!createStoreFormHide"><i class="fa fa-plus-square-o" aria-hidden="true">&nbsp;</i> Show
+              Stores</button>
+          </div>
+
+
+          <div class="row" *ngIf="!createStoreFormHide">
+            <div class="container">
+              <h3 *ngIf="!editButtonEnable" class="mb-0 text-center">Create Store</h3>
+              <h3 *ngIf="editButtonEnable" class="mb-0 text-center">Edit Store</h3>
+              <div class="card-body mx-3 p-1">
+                <form>
+                  <h5 class="mt-2">Store Details</h5>
+                  <hr>
+                  <div class="row">
+                    <div class="form-group col-md-4">
+                      <label for="inputState">Store Name<span class="text-danger">*</span></label>
+                      <input type="text" class="form-control" name="StoreName" placeholder="Store Name"
+                        [(ngModel)]='StoreName' required (blur)="StoreNameFlag = false">
+                      <span *ngIf="(StoreName == '' || StoreName == undefined) && StoreNameFlag == false"
+                        class="text-danger">Field is required</span>
+                    </div>
+                    <div class="form-group col-md-3 col-sm-4">
+                      <label>Category<span class="text-danger">*</span></label>
+                      <select class="form-control set-category" (focus)="onFocus()" [size]="size"
+                        (keyup.enter)="enterPressed($event)" name="category_ID" [(ngModel)]="category_ID"
+                        (ngModelChange)="onModelChanged(category_ID)">
+                        <option value=0 selected="true" disabled>Select Category</option>
+                        <option *ngFor="let cat of categoryData" [value]="cat.category_ID">
+                          {{cat.categoryName}}
+                        </option>
+                      </select>
+                      <span *ngIf="(category_ID == '' || category_ID == undefined) && category_IDFlag == false"
+                        class="text-danger">Field is required.</span>
+                    </div>
+                    <div class="form-group col-md-1 col-sm-2 set-hide">
+                      <label>Hidden</label>
+                      <button type="button" class="my-auto ml-1 form-control set-Categorybtn"
+                        (click)="openSm(content)"><i class="fa fa-plus-square-o" aria-hidden="true"></i></button>
+                    </div>
+                    <!-- ng modal -->
+                    <ng-template #content let-c="close" let-d="dismiss">
+                      <div class="modal-header">
+                        <h4 class="modal-title">Category Name</h4>
+                        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="form-group">
+                          <input type="text" class="form-control input-underline input-lg" name="CategoryName"
+                            placeholder="Category Name" [(ngModel)]='CategoryName'>
+
+                        </div>
+                        <div class="form-group">
+                          <input type="text" class="form-control input-underline input-lg" name="CategoryDescription"
+                            placeholder="Category Description" [(ngModel)]='CategoryDescription'>
+                        </div>
+                      </div>
+
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" (click)="c(clicktosubmit($event))"
+                          [disabled]="!CategoryName|| !CategoryDescription">Save </button>
+                      </div>
+                    </ng-template>
+                    <ng-template #content2 let-c="close" let-d="dismiss">
+                      <div class="modal-header">
+                        <h4 class="modal-title">Sub Category Name</h4>
+                        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+
+                        <div class="row">
+                          <div class="col-lg-5">
+                            <div class="form-group">
+                              <input type="text" class="form-control input-underline input-lg" name="SubcategoryName"
+                                placeholder="Sub-Category Name" [(ngModel)]='SubcategoryName'>
+                            </div>
+                            <!-- /input-group -->
+                          </div>
+                          <!-- /.col-lg-6 -->
+                          <div class="col-lg-5">
+                            <div class="form-group">
+                              <input type="text" class="form-control input-underline input-lg"
+                                name="SubcategoryDescription" placeholder="Sub-Category Description"
+                                [(ngModel)]='SubcategoryDescription'>
+                            </div>
+                            <!-- /input-group -->
+                          </div>
+                          <!-- /.col-lg-6 -->
+                          <div class="col-lg-2">
+                            <button class="form-group btn btn-md btn-outline-primary"
+                              [disabled]="!SubcategoryName||!SubcategoryDescription" (click)="clicktosubmit2($event)">
+                              <i class="fa fa-plus-circle"></i>
+                            </button>
+                            <!-- /input-group -->
+                          </div>
+                          <div class="text-danger">{{msgOnAddSubCat}}</div>
+                          <!-- /.col-lg-6 -->
+                        </div>
+                        <!-- /.row -->
+                        <div class=" row" *ngFor="let subcat of subcategoryData">
+                          <div class="col-lg-5">
+                            <div class="form-group">
+                              <p> {{subcat.subcategoryName}} </p>
+                            </div>
+                            <!-- /input-group -->
+                          </div>
+                          <!-- /.col-lg-6 -->
+                          <div class="col-lg-5">
+                            <div class="form-group">
+                              <p> {{subcat.Description}} </p>
+                            </div>
+                            <!-- /input-group -->
+                          </div>
+                          <!-- /.col-lg-6 -->
+                        </div>
+                        <!-- /.row -->
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-danger"
+                          (click)="c();(SubcategoryDescription = undefined);(SubcategoryName = undefined)">Close</button>
+                      </div>
+                    </ng-template>
+                    <!-- /NG MODAL -->
+                  </div>
+                  <div class="row">
+                    <div class="form-group col-md-4 col-sm-6">
+                      <label for="inputState">Open Time</label>
+                      <div>
+                        <input type="time" class="form-control alignTimeField" name="openTime" [(ngModel)]="OpenTime"
+                          #openTime="ngModel" pattern="^(1[0-2]|0?[1-9]):[0-5][0-9]$" min="01:00:00" max="12:59:59"
+                          (blur)="OpenTimeFlag = false">
+                        <select class="form-control set-time" name="timeFormat" [(ngModel)]="timeFormat.startTime">
+                          <option value="am" [selected]="timeFormat.startTime">AM</option>
+                          <option value="pm" [selected]="timeFormat.startTime">PM</option>
+                        </select>
+                        <div *ngIf="openTime.errors?.pattern" class="text-danger">Enter valid 12hr Format
+                          Time</div>
+                      </div>
+                    </div>
+                    <div class="form-group col-md-4 col-sm-6">
+                      <label for="inputState">Close Time</label>
+                      <div>
+                        <input type="time" class="form-control alignTimeField" name="closeTime" min="01:00:00"
+                          max="12:59:59" [(ngModel)]="CloseTime" #closeTime="ngModel"
+                          pattern="^(1[0-2]|0?[1-9]):[0-5][0-9]$" (blur)="CloseTimeFlag = false">
+                        <select class="form-control set-time" name="timeFormat2" [(ngModel)]="timeFormat.endTime">
+                          <option value="am" [selected]="timeFormat.endTime">AM</option>
+                          <option value="pm" [selected]="timeFormat.endTime">PM</option>
+                        </select>
+                        <div *ngIf="closeTime.errors?.pattern" class="text-danger">Enter valid 12hr Format
+                          Time</div>
+                      </div>
+
+                    </div>
+
+                  </div>
+                  <h5 class="mt-2">Address Details</h5>
+                  <hr>
+                  <div class="row">
+                    <div class="form-group col-md-4">
+                      <label>Pincode</label>
+                      <input type="number" class="form-control" name="Pin" placeholder="Pin" [(ngModel)]='Pin'
+                        (keyup)="onInputPin($event)" (blur)=checkingPin($event) min="100000" max="999999"
+                        (keyup.backspace)="pinmessage = false; pinStatus = false">
+                      <div *ngIf="(pinmessage && Pin != undefined && Pin != '')" class="text-danger">Pin should contain
+                        Six
+                        digits</div>
+                      <div *ngIf="(pinStatus && Pin != undefined && Pin != '')" class="text-danger">Invalid Pin</div>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label>State</label>
+                      <!-- <select name="state" class="form-control set-stateCategory" [(ngModel)]="state" onmousedown="if(this.options.length>7){this.size=7;}" onchange="this.blur()" (change)="onStateChanged($event.target.value)" onblur="this.size=0">
+                        <option value="" selected="true" disabled>Select State</option>
+                        <option *ngFor="let staTe of stateArray" [value]="staTe.state">{{staTe.state}}</option>
+                      </select> -->
+                      <!-- <label type="text" class="form-control" name="State" placeholder="State" [(ngModel)]='State' (blur)="StateFlag = false"> -->
+                      <div>
+                        <span>{{State=="" ? "__" : State }}</span>
+                      </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label>City</label>
+                      <!-- <select name="city" style="width: 195px;" class="form-control set-stateCategory" [(ngModel)]="district" onmousedown="if(this.options.length>7){this.size=7;}" onchange="this.blur()" onblur="this.size=0">
+                        <option value="" selected="true" disabled>Select City</option>
+                        <option *ngFor="let ciTy of cityArray" [value]="ciTy.city">{{ciTy.city}}</option>
+                      </select> -->
+                      <!-- <input type="text" class="form-control" name="City" placeholder="City" [(ngModel)]='City' (blur)="CityFlag = false"> -->
+                      <div>
+                        <span>{{City == ""? "__": City}}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <label>Store Address<span class="text-danger">*</span></label>
+                        <textarea rows="4" cols="40" name="description" [(ngModel)]='StoreAddress'
+                          (blur)="StoreAddressFlag = false" class="form-control" name="StoreAddress">
+                          Store Address
+                       </textarea>
+                        <!-- <input type="text" class="form-control" name="StoreAddress" placeholder="Store Address" [(ngModel)]='StoreAddress' (blur)="StoreAddressFlag = false"> -->
+                        <span *ngIf="(StoreAddress == '' || StoreAddress == undefined) && StoreAddressFlag == false"
+                          class="text-danger">Field is required</span>
+                      </div>
+                    </div>
+                  </div>
+                  <h5 class="mt-2">Manager Details</h5>
+                  <hr>
+                  <div class="row">
+                    <div class="form-group col-md-4">
+                      <label>Manager Name<span class="text-danger">*</span></label>
+                      <input type="text" class="form-control" name="ManagerName" placeholder="Manager Name"
+                        [(ngModel)]='ManagerName' (blur)="ManagerNameFlag = false">
+                      <span *ngIf="(ManagerName == '' || ManagerName == undefined) && ManagerNameFlag == false"
+                        class="text-danger">Field is required</span>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label>Employee Count</label>
+                      <input type="number" min="0" class="form-control" name="EmployeesCount" (input)="negativeCheck()"
+                        placeholder="Employees Count" [(ngModel)]='EmployeesCount' (blur)="EmployeesCountFlag = false">
+                      <span *ngIf="checkNegative" class="text-danger">Negative value not allowed</span>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label>Contact Number<span class="text-danger">*</span></label>
+                      <input type="text" class="form-control" name="ContactNumber" placeholder="Contact Number"
+                        [(ngModel)]='ContactNumber' (blur)="ContactNumberFlag = false" (input)="validatePhone($event)">
+                      <span *ngIf="(ContactNumber == undefined || ContactNumber == '') && ContactNumberFlag == false"
+                        class="text-danger">Field is required</span>
+                      <span *ngIf="phoneValidate" class="text-danger">Please Fill Valid Contact Number</span>
+                    </div>
+                  </div>
+                  <div class="mb-2 text-right">
+                    <button type="submit" class="btn btn-primary btn-store float-none mr-1"
+                      [disabled]="pinStatus || pinmessage || checkNegative || (category_ID == '' || category_ID == undefined) || (StoreName == '' || StoreName == undefined) || (StoreAddress == '' || StoreAddress == undefined) || (ContactNumber == undefined || ContactNumber == '') || (ManagerName == '' || ManagerName == undefined) || !openTime.valid || !closeTime.valid"
+                      *ngIf="!editButtonEnable"
+                      (click)="onCreateStore({storeName:StoreName, storeAddress:StoreAddress, city: City, state:State, pin:Pin,
+                                      openTime:OpenTime,closeTime: CloseTime, managerName:ManagerName, employeesCount:EmployeesCount, contactNumber:ContactNumber, category_ID: category_ID},false)">Create
+                      Store</button>
+                    <button class="btn btn-primary btn-store float-none mr-1"
+                      [disabled]="pinStatus || pinmessage ||checkNegative || (category_ID == '' || category_ID == undefined) || (StoreName == '' || StoreName == undefined) || (StoreAddress == '' || StoreAddress == undefined) || (ContactNumber == undefined || ContactNumber == '') || (ManagerName == '' || ManagerName == undefined) || !openTime.valid || !closeTime.valid"
+                      *ngIf="editButtonEnable"
+                      (click)="onCreateStore({storeName:StoreName, storeAddress:StoreAddress, city: City, state:State, pin:Pin,
+                                          openTime:OpenTime, closeTime: CloseTime, managerName:ManagerName, employeesCount:EmployeesCount, contactNumber:ContactNumber, category_ID: category_ID},true)">
+                      Edit Store </button>
+                    <button type="button" class="btn-cancel ml-1"
+                      (click)="createStoreFormHide = !createStoreFormHide; category_ID = 0; StoreName = undefined; StoreAddress = undefined; City = undefined; State = undefined; ContactNumber = undefined; EmployeesCount = undefined;ManagerName = undefined; CloseTime = undefined; OpenTime = undefined; Pin = undefined;"
+                      *ngIf="!createStoreFormHide">Cancel</button>
+                  </div>
+                  <div class="text-danger" *ngIf="storeMessage !=''">{{storeMessage}}</div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <!-- Delete Modal  03-august regan -->
+          <ng-template #storeDelete let-c=" close" let-d="dismiss">
+            <div class="modal-header">
+              <h4 class="modal-title">Store Delete</h4>
+              <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>Are You Sure, You Want to Delete The "{{ stroreNameForDeleteModal }}"&nbsp; Store!.</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-light" (click)="c()">Yes</button>
+              <button type="button" class="btn btn-light" (click)="d()">No</button>
+            </div>
+          </ng-template>
+          <!-- /Delete Modal -->
+
+          <!-- Delete Store-Pos Modal  09-august regan -->
+          <ng-template #storePosDelete let-c="close" let-d="dismiss">
+            <div class="modal-header">
+              <h4 class="modal-title">Store POS Delete</h4>
+              <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>Are You Sure,
+                <br> You Want To Delete The POS_ID "{{ strorePOS_IDForstorePosDeleteModal }}" of STORE_NAME
+                "{{ storeNameForstorePosDeleteModal }}"!.</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-light" (click)="c()">Yes</button>
+              <button type="button" class="btn btn-light" (click)="d()">No</button>
+            </div>
+          </ng-template>
+          <!-- /Delete Store-Pos Modal -->
+
+
+          <!-- Open Device POS Modal  10-august regan -->
+          <ng-template #openDevicePOS let-c="close" let-d="dismiss" style="top: -24px !important; position: relative;">
+            <div class="modal-header" *ngIf="userRoleCheck('pos_crud','create')">
+              <form style="width: 100%;" class="form-horizontal" role="form" *ngIf="addPosForm">
+                <div class="row">
+                  <div class="col-md-5">
+                    <input type="number" class="form-control" placeholder="Store ID" [(ngModel)]="store_id"
+                      name="store_id" />
+                  </div>
+                  <div class="col-md-5">
+                    <input type="text" class="form-control" placeholder="POS ID" [(ngModel)]="pos_id" name="pos_id" />
+                  </div>
+                  <div class="col-md-2">
+                    <button type="button" class="btn btn-primary"
+                      [disabled]="store_id == undefined || pos_id == undefined || pos_id == ''"
+                      (click)="addPOS({'store_id':store_id, 'pos_id': pos_id})">
+                      <i class="fa fa-plus-circle"></i>
+                    </button>
+                  </div>
+                </div>
+              </form>
+
+              <form style="width: 100%;" class="form-horizontal" role="form" *ngIf="!addPosForm">
+                <div class="row">
+                  <div class="col-md-5">
+                    <input type="number" class="form-control" placeholder="Store ID" [(ngModel)]="data.Store_ID"
+                      name="store_id" />
+                  </div>
+                  <div class="col-md-5">
+                    <input type="text" class="form-control" placeholder="POS ID" [(ngModel)]="data.pos_ID"
+                      name="pos_id" />
+                  </div>
+                  <div class="col-md-2">
+                    <div class="row">
+                      <div class="col-md-1">
+                        <button type="button" class="btn btn-primary"
+                          [disabled]="data.Store_ID == undefined || data.pos_ID == undefined || data.pos_ID == ''"
+                          (click)="editPOS(data)">
+                          <i class="fa fa-plus-circle"></i>
+                        </button>
+                      </div>
+
+                      <div class="col-md-1" style="margin-left: 35px;">
+                        <button type="button" class="btn btn-default"
+                          (click)="addPosForm = !addPosForm; store_id = undefined; pos_id = undefined; editPosFlag = false; editPosFlagFail = false; addPosFlag = false; addPosFlagFail = false;">
+                          <i class="fa fa-times-circle"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="table-responsive">
+                    <table class="table table-hover pos_table mb-0">
+                      <thead>
+                        <tr>
+                          <th>Store Name</th>
+                          <th>POS ID</th>
+                          <th>Store ID</th>
+                          <th>Status</th>
+                          <th *ngIf="userRoleCheck('pos_crud','create')">Edit</th>
+                          <th *ngIf="userRoleCheck('pos_crud','create')">Delete</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let pos of pos_list">
+                          <td>{{pos.storeName}}</td>
+                          <td>{{pos.pos_ID}}</td>
+                          <td>{{pos.Store_ID}}</td>
+
+                          <td>
+                            <ui-switch [(ngModel)]="pos.deviceStatus" [disabled]="pos.isDeleted == 1"
+                              (change)="onChange($event, pos.Store_ID, pos.pos_ID, pos.tbl_store_pos_ID)"></ui-switch>
+                          </td>
+
+                          <td style="cursor: pointer;" *ngIf="userRoleCheck('pos_crud','create')">
+                            <button [disabled]="pos.isDeleted == 1" class="btn btn-primary" (click)="editPOSForm(pos)">
+                              <i class="fa fa-pencil" aria-hidden="true"></i>
+                            </button>
+                          </td>
+
+                          <td style="cursor: pointer;" *ngIf="userRoleCheck('pos_crud','create')">
+                            <button [disabled]="pos.isDeleted == 1" class="btn btn-danger"
+                              (click)="openDeletePosID(storePosDelete, pos)">
+                              <i class="fa fa-trash" aria-hidden="true"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div *ngIf="!isDataAvailable" class="text-danger text-center">No Data Available</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-light" (click)="c()">Close</button>
+            </div>
+          </ng-template>
+          <!-- /Open Device POS Modal -->
+          <div class="card mt-4" *ngIf="dataFlag=='2'">
+            <h3>Data not available</h3>
+          </div>
+          <div class="row" *ngIf="createStoreFormHide">
+
+            <div *ngIf="dataFlag=='1'" class="card-block table-responsive pb-0"
+              style="height:500px!important; overflow-y:scroll;padding-left:10px; padding-top: 5px;">
+              <table class="table table-hover table-striped table-condensed mb-0">
+                <thead class="thead-inverse">
+                  <tr>
+                    <th>Store ID </th>
+                    <th>Store Name </th>
+                    <th>Store Category</th>
+                    <!-- <th>Store Address</th>
+                    <th>City </th>
+                    <th>State</th>
+                    <th>Pin</th> -->
+                    <th>Open Time</th>
+                    <th>Close Time</th>
+                    <th>Manager Name </th>
+                    <!-- <th>Employees Count</th> -->
+                    <th>Contact Number</th>
+                    <th>Devices</th>
+
+
+                    <th *ngIf="userRoleCheck('store','update')">
+                      Edit
+                    </th>
+                    <th *ngIf="userRoleCheck('store','delete')">
+                      Delete
+                    </th>
+                    <th *ngIf="userRoleCheck('manager','read')">
+                      Users
+                    </th>
+                    <th *ngIf="userRoleCheck('manager','read')">
+                      More Info
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container *ngFor="let data of storeData;  let indx=index">
+                    <tr>
+                      <td>{{data.store_ID }}</td>
+                      <td>{{data.storeName }}</td>
+                      <td>{{fetchCategoryName(data.category_ID)}}</td>
+                      <!-- <td>{{data.storeAddress?data.storeAddress:"__" }}</td>
+                    <td>{{data.city? data.city:"__" }}</td>
+                    <td>{{data.state? data.state:"__"}}</td>
+                    <td>{{data.pin? data.pin: "__"}}</td> -->
+                      <td>{{data.openTime? (data.openTime| date:'short':'UTC +5:30' | slice:8) :"__"}}</td>
+                      <td>{{data.closeTime? (data.closeTime| date:'short':'UTC +5:30' | slice:8) : "__"}}</td>
+                      <td>{{data.managerName }}</td>
+                      <!-- <td>{{data.employeesCount? data.employeesCount:"__"}}</td> -->
+                      <td>{{data.contactNumber}}</td>
+
+                      <td>
+                        <button type="button" title="Devices in use by store" class="btn btn-default i-size"
+                          (click)="openDevicesPOSModal(openDevicePOS)">
+                          <i class="fa fa-mobile" aria-hidden="true"></i>
+                        </button>
+                      </td>
+
+                      <td *ngIf="userRoleCheck('store','update')">
+                        <button type="button" title="Edit Store" class="btn btn-primary"
+                          (click)="editStoreFunction(data)">
+                          <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </button>
+                      </td>
+
+                      <td *ngIf="userRoleCheck('store','delete')">
+                        <button class="btn btn-danger mb-2 mr-2" title="Delete store"
+                          (click)="openDeleteStore(storeDelete, data.store_ID, data.storeName, data.deviceStatus)">
+                          <i class="fa fa-trash" aria-hidden="true"></i>
+                        </button>
+                      </td>
+
+                      <td *ngIf="userRoleCheck('manager','read')">
+                        <button type="button" title="Managers & Admins" class="btn btn-success"
+                          (click)="managerFunction(data.store_ID)">
+                          <i class="fa fa-users" aria-hidden="true"></i>
+                        </button>
+                      </td>
+                      <td *ngIf="(storeIndex != indx) && userRoleCheck('manager','read')">
+                        <button type="button" title="More info about store" class="btn btn-info "
+                          (click)="storeMoreDetail(indx)">
+                          <!-- <i class="fa fa-arrow-circle-down"></i> -->
+                          <i class="fa fa-info-circle"></i>
+                        </button>
+                      </td>
+                      <td *ngIf="moreDetailToggle &&(storeIndex == indx) && userRoleCheck('manager','read')">
+                        <button type="button" title="More info about store" class="btn btn-info "
+                          (click)="storeMoreDetail(indx)">
+                          <!-- <i class="fa fa-arrow-circle-up"></i> -->
+                          <i class="fa fa-info-circle"></i>
+                        </button>
+                      </td>
+                      <td *ngIf="!moreDetailToggle && (storeIndex == indx) && userRoleCheck('manager','read')">
+                        <button type="button" title="More info about store" class="btn btn-info "
+                          (click)="storeMoreDetail(indx)">
+                          <!-- <i class="fa fa-arrow-circle-down"></i> -->
+                          <i class="fa fa-info-circle"></i>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td *ngIf="moreDetailToggle && (storeIndex == indx)" colspan="14">
+                        <table class="table table-hover table-striped table-sm mb-0">
+                          <thead class="thead-dark">
+
+                            <tr>
+                              <th>Store Address</th>
+                              <th>City </th>
+                              <th>State</th>
+                              <th>Pin</th>
+                              <th>Employees Count</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>{{data.storeAddress?data.storeAddress:"__" }}</td>
+                              <td>{{data.city? data.city:"__" }}</td>
+                              <td>{{data.state? data.state:"__"}}</td>
+                              <td>{{data.pin? data.pin: "__"}}</td>
+                              <td>{{data.employeesCount? data.employeesCount:"__"}}</td>
+
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </table>
+            </div>
+
+            <!--  pagination  -->
+            <mat-paginator *ngIf="dataFlag=='1'" class="paginator--centered mx-auto" [length]="total"
+              [pageIndex]="page-1" [pageSize]="pageSize" [pageSizeOptions]="[ 5,10, 25,50, 100]"
+              (page)="changePage($event)">
+            </mat-paginator>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,226 @@
+.cursor-hover {
+  cursor: pointer
+}
+
+.modal-header {
+  padding-bottom: 0px !important;
+  padding-top: 5px !important;
+}
+
+.custom-label label {
+  margin-bottom: 2px !important;
+}
+
+.custom-add-product {
+  float: left;
+  margin: 10px 0px;
+}
+
+.custom-product-table {
+  padding: 10px !important;
+}
+
+.custom-fieldset fieldset {
+  width: 23%;
+  float: left;
+  margin-right: 10px;
+  margin-top: 20px;
+  max-height: 60px !important;
+}
+
+fieldset {
+  margin-bottom: 5px !important;
+}
+
+hr {
+  margin: 10px 0px 0px 0px !important;
+}
+
+.modal-footer {
+  padding: 6px !important;
+  padding-top: 6px !important;
+}
+
+input[type=file] {
+  color: transparent;
+}
+
+.custom-fileupload {
+  width: 49%;
+  display: inline-block;
+  overflow-x: hidden;
+}
+
+.wd-100 {
+  width: 100px;
+}
+
+.wd-90 {
+  width: 90px;
+}
+
+.center {
+  text-align: center;
+}
+
+.pagination {
+  display: inline-block;
+}
+
+.pagination a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color .3s;
+  border: 1px solid #ddd;
+  margin: 0 4px;
+}
+
+.pagination a.active {
+  background-color: #4CAF50;
+  color: white;
+  border: 1px solid #4CAF50;
+}
+
+.forSuccessMessage {
+  margin-left: 24px;
+  vertical-align: -webkit-baseline-middle;
+}
+
+.ExtraPadding {
+  padding-left: 10px;
+}
+
+hr {
+  clear: both;
+  display: block;
+  width: 96%;
+  // background-color: #FFFF00;
+  height: 1px;
+}
+
+.searchButton {
+  width: max-content;
+  float: right;
+  margin-top: 10px;
+}
+
+.astris {
+  color: red;
+  position: relative;
+}
+
+mat-paginator.mat-paginator.paginator--centered {
+  display: flex;
+  justify-content: center;
+  width: fit-content;
+  color: white;
+  font-size: 15px;
+  font-family: "Open Sans", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+::ng-deep .mat-option-text {
+  color: white !important;
+}
+
+::ng-deep .mat-select-arrow {
+  color: white !important;
+}
+
+::ng-deep .mat-form-field-infix,
+.mat-form-field-ripple {
+  color: white !important;
+}
+
+::ng-deep .mat-form-field-ripple {
+  background-color: white !important;
+}
+
+.close {
+  color: #d9534f;
+  font-size: 36px;
+  outline: none;
+  opacity: 1;
+  width: 46px;
+}
+
+.no-click-backdrop {
+  pointer-events: none;
+}
+
+.set-title {
+  width: -webkit-fill-available;
+}
+
+.category-right {
+  margin-right: 30px !important;
+}
+
+.w-40 {
+  width: 40%;
+}
+
+.uploadfilecontainer {
+  // background-image: url("../../assets/cloud-2044823_960_720.png");
+  background-repeat: no-repeat;
+  background-size: 100px;
+  background-position: center;
+  height: auto;
+  width: 80%;
+  margin: 20px auto;
+  border: 2px dashed #1C8ADB;
+  border-radius: 10px;
+}
+
+.dragcss:hover {
+  cursor: pointer;
+  background-color: #9ecbec !important;
+  opacity: 0.8;
+}
+
+.dragcss {
+  min-height: 100px;
+  background-repeat: no-repeat;
+  min-width: 280px;
+  display: table;
+  background-color: #eee;
+  border: dotted 1px #aaa;
+}
+
+// .set-list {
+//   max-height: 50px !important;
+//   overflow-y: auto !important;
+// }
+
+// select:focus {
+//   padding: 5px;
+//   height: 50px;
+// }
+
+.my-drop-zone {
+  border: dotted 3px lightgray;
+}
+
+.nv-file-over {
+  border: dotted 3px green;
+}
+
+.another-file-over-class {
+  border: dotted 3px green;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+.search-button {
+  border-radius: 18px;
+}
+
+.pos_table {
+  max-height: 400px;
+  display: block;
+  overflow-y: auto;
+}

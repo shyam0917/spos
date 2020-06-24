@@ -1,0 +1,181 @@
+$topnav-background-color: #fff;
+
+.topnav {
+    border-radius: 0;
+    background-color: $topnav-background-color;
+    padding: 6px;
+    z-index: 2;
+
+    .text-center {
+        text-align: center;
+        padding-left: 0;
+        cursor: pointer;
+    }
+
+    .top-right-nav {
+        .buy-now {
+            a {
+                color: #999;
+            }
+        }
+
+        .dropdown-menu {
+            top: 40px;
+            right: -5px;
+            left: auto;
+
+            .message-preview {
+                .media {
+                    .media-body {
+                        .media-heading {
+                            font-size: 14px;
+                            font-weight: bold;
+                            margin-bottom: 0;
+                        }
+
+                        p {
+                            margin: 0;
+                        }
+
+                        p.last {
+                            font-size: 13px;
+                            margin-bottom: 0;
+                        }
+                    }
+                }
+            }
+
+            hr {
+                margin-top: 1px;
+                margin-bottom: 4px;
+            }
+        }
+    }
+}
+
+.messages {
+    width: 300px;
+
+    .media {
+        border-bottom: 1px solid #DDD;
+        padding: 5px 10px;
+
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+
+    .media-body {
+        h5 {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .small {
+            margin: 0;
+        }
+
+        .last {
+            font-size: 12px;
+            margin: 0;
+        }
+    }
+}
+
+.header .navbar {
+    background: $topnav-background-color !important;
+}
+
+button.navbar-toggler.navbar-toggler-right {
+    margin: 25px 15px !important;
+    outline: none;
+}
+
+button.navbar-toggler.navbar-toggler-right i {
+    color: #000;
+}
+
+nav.navbar.navbar-inverse.bg-inverse.navbar-toggleable-md {
+    padding: 10px 40px !important;
+}
+
+.welcome-text {
+    position: relative;
+    top: 6px;
+}
+
+.set-pointer {
+    cursor: pointer;
+}
+
+a:active {
+    background: transparent;
+}
+
+.logout {
+    background: none;
+    border: none;
+    color: #000;
+    font-size: 18px;
+    outline: none;
+    box-shadow: none;
+}
+
+.welcome-text {
+    color: #000;
+    font-size: 22px;
+    margin-left: 100px;
+}
+
+.logout-dropdown .dropdown-menu {
+    padding: 0;
+}
+
+.logout-dropdown a {
+    font-weight: bold;
+}
+
+.logout-dropdown .dropdown-menu a {
+    padding: 10px 15px;
+}
+
+@media screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    .navbar-brand .user-avatar {
+        width: 120px !important;
+    }
+
+    button.navbar-toggler.navbar-toggler-right i {
+        font-size: 25px;
+    }
+
+    nav.navbar.navbar-inverse.bg-inverse.navbar-toggleable-md {
+        padding: 10px 20px !important;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .navbar-brand .user-avatar {
+        width: 100px !important;
+    }
+
+    button.navbar-toggler.navbar-toggler-right i {
+        font-size: 22px;
+    }
+
+    nav.navbar.navbar-inverse.bg-inverse.navbar-toggleable-md {
+        padding: 10px 10px !important;
+    }
+
+    button.navbar-toggler.navbar-toggler-right {
+        margin-right: 0 !important;
+    }
+}
+
+.sidebar-top {
+    margin-top: -35px;
+}
+
+.astris {
+    color: red;
+    position: relative;
+}

@@ -1,0 +1,6 @@
+### payu money
+GET http://localhost:3000/licence
+token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwX3VzZXJuYW1lIjoiU19BRE1JTiIsInBfcGFzc3dvcmQiOiJ0ZXN0IiwiaWF0IjoxNTc4OTA5MDEyLCJleHAiOjE1Nzg5MTAyMTJ9.dxjfcCTJhrHLIQcJapijOID1GqXgPm9kSo-36eFKwGo"
+
+###
+DELETE http://localhost:3000/licence/8dff7427-6f43-4447-84c5-a35383a95b35

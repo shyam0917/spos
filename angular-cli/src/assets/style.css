@@ -1,0 +1,164 @@
+/*Common btn start*/
+.btn-submit {
+    background: #216cff;
+    font-weight: bold;
+    border-radius: 10px;
+    box-shadow: 0 1px 10px rgba(0, 0, 0, 0.07), 0 1px 5px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    color: #fff;
+    padding: 5px 15px;
+    cursor: pointer;
+}
+
+.btn-add {
+    background: #424242;
+    font-weight: bold;
+    border-radius: 10px;
+    box-shadow: 0 1px 10px rgba(0, 0, 0, 0.07), 0 1px 5px rgba(0, 0, 0, 0.1);
+    font-size: 18px;
+    color: #fff;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.btn-cancel {
+    background: #eaeaea;
+    font-weight: bold;
+    border-radius: 10px;
+    box-shadow: 0 1px 10px rgba(0, 0, 0, 0.07), 0 1px 5px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    color: #000;
+    padding: 5px 15px;
+    cursor: pointer;
+}
+
+.btn-store {
+    float: left;
+}
+
+.btn-submit:hover,
+.btn-submit:active,
+.btn-submit:focus {
+    outline: none;
+}
+
+.btn-add:hover,
+.btn-add:active,
+.btn-add:focus {
+    outline: none;
+}
+
+.btn-cancel:hover,
+.btn-cancel:active,
+.btn-cancel:focus {
+    outline: none;
+}
+
+/*Common btn end*/
+
+/*handburger start*/
+.handburger {
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+    -ms-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+}
+
+.handburger span,
+.handburger span:after,
+.handburger span:before {
+    cursor: pointer;
+    height: 3px;
+    width: 23px;
+    background: #515151;
+    position: absolute;
+    display: block;
+    right: 0;
+    content: '';
+    transition: all 500ms ease-in-out;
+}
+
+.handburger span:before {
+    top: -7px;
+}
+
+.handburger span:after {
+    bottom: -7px;
+}
+
+body.push-right .handburger span {
+    background: transparent !important;
+}
+
+body.push-right .handburger span:before {
+    transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    top: 0px;
+}
+
+body.push-right .handburger span:after {
+    transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    bottom: 0;
+}
+
+/*handburger end*/
+
+.common-inner {
+    background: transparent !important;
+    border: none !important;
+}
+
+.table {
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 1px 10px rgba(0, 0, 0, 0.07), 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+.table-striped tbody tr:nth-of-type(odd),
+.table-striped tbody tr {
+    background: transparent !important;
+}
+
+.thead-inverse th {
+    background-color: transparent !important;
+}
+
+.table thead th {
+    background: #216cff !important;
+    color: #fff;
+}
+
+.table thead th:first-child {
+    border-radius: 20px 0 0 0;
+}
+
+.table thead th:last-of-type {
+    border-radius: 0 20px 0 0;
+}
+
+.common-inner .heading {
+    /* float: left; */
+    font-weight: bold;
+}
+
+.common-inner .inner-btn {
+    text-align: right;
+}
+
+
+.modal::before {
+    content: '';
+    display: inline-block;
+    height: 20%;
+    vertical-align: middle;
+    margin-right: -4px;
+}

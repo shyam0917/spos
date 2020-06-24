@@ -1,0 +1,14 @@
+// shared css for the login and signup page
+@import "../login/login.component.scss";
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+
+.buttonsSpace {
+    margin-left: 10px;
+}

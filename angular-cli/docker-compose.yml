@@ -1,0 +1,10 @@
+version: "3"
+
+services:
+  frontend:
+    image: angular
+    build: .
+    ports:
+      - "8000:4200"
+    volumes:
+      - "./:/app"

@@ -1,0 +1,83 @@
+<!-- <p>
+  sales works!
+</p>
+<p>1. It will show total amount of sale(till now).</p>
+<p>2. Tax.</p>
+<p>3. List of products category wise.</p>
+<ul>
+  <li>3.1. Item ID</li>
+  <li>3.2. Item Name</li>
+  <li>3.3. Item Quantity</li>
+  <li>3.4. Item Price</li>
+</ul>
+
+<p>4. Top selling Items(by day/ by month).</p>
+<p>5. Profit / Loss.?</p> -->
+<div class="login-page" [@routerTransition]>
+  <div class="row">
+    <div class="col-md-4">
+      <h4>Print Receipt Configuration</h4>
+      <!-- <fancy-image-uploader [options]="options" (onUpload)="onUpload($event)"></fancy-image-uploader> -->
+
+      <!-- image Upload -->
+      <!-- <input type='file' onchange="readURL(this)" />
+      <img src="http://placehold.it/180" /> -->
+      <input type='file' title="choose logo" #fileData (change)="readURL(fileData);" />
+      <img  src="{{imgUrl}}" alt="your image" />
+
+
+      <div class="form-group" *ngFor="let i of billData; let in = index">
+        <label [style.font-size.px]="i.fontSize" [style.font-family]="i.fontFamily">{{i.value}}</label>
+      </div>
+
+      <button (click)="generatePDF()">GeneratePDF</button>
+    </div>
+
+    <div class="col-md-8">
+      <ul class="list-buttons-main">
+        <li *ngFor="let i of billData; let in = index">
+          <label>{{i.header}}</label>
+          <input type="text" [(ngModel)]="i.value">
+          <i class="fa fa-minus-circle" aria-hidden="true" (click)=minus(in)></i>
+          {{i.fontSize}}
+          <i class="fa fa-plus-circle" aria-hidden="true" (click)=plus(in)></i>
+          <i class="fa fa-font" (click)=styleModal(add,in) aria-hidden="true"></i>
+        </li>
+      </ul>
+    </div>
+
+    <ng-template #add let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h4 class="modal-title">{{this.billData[0].value}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6">
+            <h4>Font Family</h4>
+            <ul class="list-buttons-main">
+              <li *ngFor="let f of fontFamily; let in = index" [ngClass]="[in == indexFontFamily ? 'active_fontFamily' : '']" (click)="getFontFamily(in,f)">
+                {{f}}
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-6">
+            <h4>Text Alignment</h4>
+            <ul class="list-buttons-main">
+              <li *ngFor="let t of textAlignment; let in = index" [ngClass]="[in == indexTextAlign ? 'active_textAlign' : '']" (click)="getTextAlign(in,t)">
+                {{t}}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cancel</button>
+        <!-- <button class="btn btn-secondary" (click)="saveEditing()">Done </button> -->
+      </div>
+    </ng-template>
+
+  </div>
+</div>

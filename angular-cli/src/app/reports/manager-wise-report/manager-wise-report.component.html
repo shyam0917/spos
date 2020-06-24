@@ -1,0 +1,61 @@
+<div [@routerTransition]>
+  <!-- <app-page-header [heading]="'Tables'" [icon]="'fa-table'"></app-page-header> -->
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card mb-3">
+        <div class="card-header">Manager Wise Report
+          <button (click)="exportToExcel($event)" class="btn btn-primary pull-right"><i _ngcontent-c16=""
+              class="fa fa-file-excel-o" aria-hidden="true"></i> Export to excel</button>
+        </div>
+        <h3 *ngIf="dataFlag=='2'">Data not available </h3>
+        <div class="card-block table-responsive" *ngIf="dataFlag=='1'">
+          <table class="table table-hover table-striped">
+            <thead class="thead-inverse">
+              <tr>
+                <th>SysUser ID </th>
+                <th>Store ID </th>
+                <th>Role </th>
+                <th>First Name </th>
+                <th>Middle Name </th>
+                <th>Last Name </th>
+                <th>Email </th>
+                <th>User Name </th>
+                <th>Password </th>
+                <th>Mobile </th>
+                <th>Emergency Contact </th>
+                <th>Role ID </th>
+                <th>Name </th>
+                <th>Access ID </th>
+
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of managerWiseReportInfo">
+                <td>{{data.sysUser_ID }}</td>
+                <td>{{data.store_ID }}</td>
+                <td>{{data.role }}</td>
+                <td>{{data.firstName }}</td>
+                <td>{{data.middleName }}</td>
+                <td>{{data.lastName }}</td>
+                <td>{{data.email }}</td>
+                <td>{{data.userName }}</td>
+                <td>{{data.password }}</td>
+                <td>{{data.mobile }}</td>
+                <td>{{data.emergencyContact }}</td>
+                <td>{{data.role_ID }}</td>
+                <td>{{data.name }}</td>
+                <td>{{data.access_ID }}</td>
+
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--  pagination  -->
+  <mat-paginator *ngIf="dataFlag=='1'" class="paginator--centered mx-auto" [length]="total" [pageIndex]="page-1"
+    [pageSize]="pageSize" [pageSizeOptions]="[ 5,10, 25,50, 100]" (page)="changePage($event)">
+  </mat-paginator>
+</div>

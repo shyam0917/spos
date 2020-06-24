@@ -1,0 +1,282 @@
+<div class="common-inner">
+  <div class="login-page" [@routerTransition]>
+    <!-- <h2 class="heading">Manager</h2> -->
+    <div *ngIf="userRoleCheck('manager','create')">
+      <button type="button" class="btn-add" (click)="createManagerFormHide = !createManagerFormHide; createManager()"
+        *ngIf="createManagerFormHide"><i class="fa fa-plus-square-o" aria-hidden="true">&nbsp;</i> Create
+        Manager</button>
+    </div>
+    <div *ngIf="userRoleCheck('manager','update')">
+      <button type="button" class="btn-add" (click)="createManagerFormHide = !createManagerFormHide"
+        *ngIf="!createManagerFormHide"><i class="fa fa-plus-square-o" aria-hidden="true">&nbsp;</i> Show
+        Managers</button>
+    </div>
+
+    <div class="mx-5">
+      <div *ngIf="!createManagerFormHide">
+        <h3 class="text-center" *ngIf="updateManagerFormHide">Create Manager</h3>
+        <h3 class="text-center" *ngIf="!updateManagerFormHide">Update Manager</h3>
+        <form class="mx-5">
+          <div class="form-content">
+            <div class="float-right">
+              <h5 class="d-inline">Store ID -</h5>
+              <h5 class="d-inline font-italic">{{storeId}}</h5>
+            </div>
+
+
+            <h5 class="mt-2">Manager Details</h5>
+            <hr>
+            <div class="row">
+              <div class="form-group col-md-4">
+                <label>Select Role<span class="text-danger">*</span></label>
+                <select class="form-control" [(ngModel)]="role" name="role" (blur)="roleFlag = false">
+                  <option value="default" selected disabled hidden>Select Role</option>
+                  <option value="Account Manager" selected disabled hidden>Account Manager</option>
+                  <option value="Store Manager" selected disabled hidden>Store Manager</option>
+                  <option value="Super Admin" selected disabled hidden>Super Admin</option>
+                  <option value="Store Admin" selected disabled hidden>Store Admin</option>
+                  <option value="Admin" selected disabled hidden>Admin</option>
+                  <option value="Store User" selected disabled hidden>Store User</option>
+                  <option value="System User" selected disabled hidden>System User</option>
+                  <option *ngFor="let rol of roles" [value]="rol.roles">{{rol.name}}</option>
+                </select>
+                <span class="text-danger" *ngIf="role == 'Select Role'">Field is required</span>
+              </div>
+              <div class="form-group col-md-4">
+                <label>First Name<span class="text-danger">*</span></label>
+                <input type="text" autocomplete="off" class="form-control input-underline input-lg "
+                  [(ngModel)]="Firstname" name="Firstname" (blur)="FirstnameFlag = false"
+                  (keydown)="onChangeName($event.target.name)">
+                <span class="text-danger"
+                  *ngIf="(Firstname == undefined || Firstname == '') && FirstnameFlag == false">Field is required</span>
+                <span *ngIf="FirstnameValidate && (Firstname != undefined) && (Firstname != '')"
+                  class="text-danger">Please Fill Alphabates only</span>
+              </div>
+              <div class="form-group col-md-4">
+                <label>Middle Name</label>
+                <input type="text" class="form-control input-underline input-lg  required" [(ngModel)]="Middlename"
+                  name="Middlename" (blur)="MiddlenameFlag = false" (keydown)="onChangeName($event.target.name)">
+                <span *ngIf="MiddlenameValidate && (Middlename != undefined) && (Middlename != '')"
+                  class="text-danger">Please Fill Alphabates only</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-4">
+                <label>Last Name</label>
+                <input type="text" class="form-control input-underline input-lg" [(ngModel)]="Lastname" name="Lastname"
+                  (blur)="LastnameFlag = false" (keydown)="onChangeName($event.target.name)" autocomplete="off">
+
+                <span *ngIf="LastnameValidate && (Lastname != undefined) && (Lastname != '')" class="text-danger">Please
+                  Fill Alphabates only</span>
+              </div>
+              <div class="form-group col-md-4">
+                <label>Email<span class="text-danger">*</span></label>
+                <input class="form-control input-underline input-lg" (blur)="(EmailFlag = false); checkEmail(Email);"
+                  [(ngModel)]="Email" name="Email" autocomplete="off">
+                <span class="text-danger" *ngIf="(Email == undefined || Email == '') && EmailFlag == false">Field is
+                  required</span>
+                <span class="text-danger"
+                  *ngIf="validateEmail(Email) == false && Email !== '' && Email !== undefined && EmailFlag == false">Email
+                  is not valid</span>
+                <p ion-text *ngIf="updateManagerFormHide && emailPermit && (Email != '')" class="text-danger"
+                  padding-left>
+                  This email address exist, try another one.
+                </p>
+              </div>
+              <div class="form-group col-md-4">
+                <label>Username<span class="text-danger">*</span></label>
+                <input type="text" class="form-control input-underline input-lg"
+                  (blur)=" checkUsername(Username);(UsernameFlag = false)" (keydown)="onNameChange()"
+                  [(ngModel)]="Username" name="Username">
+                <span class="text-danger"
+                  *ngIf="(Username == undefined || Username == '') && UsernameFlag == false">Field
+                  is required</span>
+                <p ion-text *ngIf="updateManagerFormHide && userPermit && (Username != '')" class="text-danger"
+                  padding-left>
+                  This user name has taken, try another.
+                </p>
+
+                <p ion-text *ngIf=" !updateManagerFormHide && userPermit && (Username != '')" class="text-danger"
+                  padding-left>
+                  This user name has taken, try another.
+                </p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-4">
+                <label>Password<span class="text-danger">*</span></label>
+                <input type="text" class="form-control input-underline input-lg" [(ngModel)]="Password" name="Password"
+                  (blur)="PasswordFlag = false" autocomplete="new-password" style="-webkit-text-security: disc;">
+                <span class="text-danger"
+                  *ngIf="(Password == undefined || Password == '') && PasswordFlag == false">Field
+                  is required</span>
+              </div>
+              <div class="form-group col-md-4">
+                <label>Contact Number<span class="text-danger">*</span></label>
+                <input type="number" class="form-control input-underline input-lg" [(ngModel)]="PhoneNumber"
+                  name="PhoneNumber" (blur)="PhoneNumberFlag = false" (keypress)="onPressPhone($event.target.name)">
+                <span class="text-danger" *ngIf="(PhoneNumber == undefined) && PhoneNumberFlag == false">Field is
+                  required</span>
+                <span *ngIf="phoneValidate && PhoneNumber != undefined" class="text-danger">Please Fill Valid Contact
+                  Number</span>
+              </div>
+              <div class="form-group col-md-4">
+                <label>Emergency Contact Number</label>
+                <input type="number" class="form-control input-underline input-lg" [(ngModel)]="EmergencyContactNumber"
+                  name="EmergencyContactNumber" (blur)="EmergencyContactNumberFlag = false"
+                  (keypress)="onPressPhone($event.target.name)">
+                <span *ngIf="emergencyPhoneValidate && EmergencyContactNumber != undefined" class="text-danger">Please
+                  Fill Valid Contact Number</span>
+              </div>
+            </div>
+
+          </div>
+          <h3 class="text-success" *ngIf="managerUpdateSuccess">Manager updated successfully.</h3>
+          <h3 class="text-success" *ngIf="managerCreateSuccess">Manager created successfully.</h3>
+          <div class="float-right">
+            <button class="btn btn-primary btn-store float-none mr-1" *ngIf="updateManagerFormHide"
+              [disabled]="(role == 'default')|| validateEmail(Email) == false ||(Firstname == undefined || Firstname == '') || (Email == undefined || Email == '')|| (emailPermit== true) || (Username == undefined || Username == ''|| userPermit == true) || (PhoneNumber == undefined)"
+              (click)="create({role:role,firstname:Firstname,middlename:Middlename,lastname:Lastname,
+          email:Email,username:Username,password:Password,phonenumber:PhoneNumber,emergencyContact:EmergencyContactNumber},false)">
+              Create </button>
+            <button class="btn btn-primary btn-store float-none mr-1" *ngIf="!updateManagerFormHide"
+              [disabled]="validateEmail(Email) == false || (Firstname == undefined || Firstname == '') || (Email == undefined || Email == '')|| (emailPermit== true) || (Username == undefined || Username == ''|| userPermit == true) || (PhoneNumber == undefined) "
+              (click)="create({role:role,firstname:Firstname,middlename:Middlename,lastname:Lastname,
+            email:Email,username:Username,password:Password,phonenumber:PhoneNumber,emergencyContact:EmergencyContactNumber},true)">
+              Update </button>
+            <button class="btn-cancel" (click)="createManagerFormHide = !createManagerFormHide"
+              *ngIf="!createManagerFormHide">Cancel</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Delete Modal  03-august regan -->
+      <ng-template #roleDelete let-c="close" let-d="dismiss">
+        <div class="modal-header">
+          <h4 class="modal-title">Role Delete</h4>
+          <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Are You Sure, You Want to Delete The "{{ usernameForDeleteModal }}" of "{{ roleForDeleteModal }}"&nbsp;
+            Role!.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-light" (click)="c()">Yes</button>
+          <button type="button" class="btn btn-light" (click)="d()">No</button>
+        </div>
+      </ng-template>
+      <!-- /Delete Modal -->
+      <div *ngIf="!dataFlag" class="card">
+        <h3>Data not available</h3>
+      </div>
+      <div class="row" *ngIf="createManagerFormHide">
+
+        <div *ngIf="dataFlag" class="card-block table-responsive manager_table pb-0">
+          <table class="table table-hover table-striped table-condensed mb-0">
+            <thead class="thead-inverse head-height">
+              <tr>
+                <th>Store ID</th>
+                <th>Role </th>
+                <th>First Name</th>
+                <!-- <th>Middle Name </th> -->
+                <!-- <th>Last Name</th> -->
+                <th>Email</th>
+                <th>User Name</th>
+                <th>Password</th>
+                <th>Phone Number</th>
+                <!-- <th>Emergency Contact Number</th> -->
+                <th *ngIf="userRoleCheck('manager','update')">
+                  Edit
+                </th>
+                <th *ngIf="userRoleCheck('manager','delete')">
+                  Delete
+                </th>
+                <th>Info</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let data of managers;  let indx=index">
+                <tr>
+                  <td>{{data.store_ID }}</td>
+                  <td>{{data.role }}</td>
+                  <td>{{data.firstName}}</td>
+                  <!-- <td>{{data.middleName }}</td> -->
+                  <!-- <td>{{data.lastName}}</td> -->
+                  <td>{{data.email}}</td>
+                  <td>{{data.userName}}</td>
+                  <td>{{data.password}}</td>
+                  <td>{{data.mobile }}</td>
+                  <!-- <td>{{data.emergencyContact}}</td> -->
+
+                  <td *ngIf="userRoleCheck('manager','update')">
+                    <button title="Edit user" type="button" class="btn btn-primary" (click)="editManagerFunction(data)">
+                      <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </button>
+                  </td>
+                  <td *ngIf="userRoleCheck('manager','delete')">
+                    <!-- 03-august regan -->
+                    <!-- <button type="button" class="btn btn-danger" (click)="deleteManagerFn(data.sysUser_ID)">
+                  <i class="fa fa-trash" aria-hidden="true"></i>
+                </button> -->
+
+                    <button title="Delete user" class="btn btn-danger mb-2 mr-2"
+                      (click)="openDeleteRole(roleDelete, data.sysUser_ID, data.userName, data.role)"><i
+                        class="fa fa-trash" aria-hidden="true"></i></button>
+                  </td>
+                  <td *ngIf="(storeIndex != indx) && userRoleCheck('manager','read')">
+                    <button type="button" title="More info about user" class="btn btn-info"
+                      (click)="managerMoreDetail(indx)">
+                      <!-- <i class="fa fa-arrow-circle-down"></i> -->
+                      <i class="fa fa-info-circle"></i>
+                    </button>
+                  </td>
+                  <td *ngIf="moreDetailToggle &&(storeIndex == indx) && userRoleCheck('manager','read')">
+                    <button type="button" title="More info about user" class="btn btn-info"
+                      (click)="managerMoreDetail(indx)">
+                      <!-- <i class="fa fa-arrow-circle-up"></i> -->
+                      <i class="fa fa-info-circle"></i>
+                    </button>
+                  </td>
+                  <td *ngIf="!moreDetailToggle && (storeIndex == indx) && userRoleCheck('manager','read')">
+                    <button type="button" title="More info about user" class="btn btn-info"
+                      (click)="managerMoreDetail(indx)">
+                      <!-- <i class="fa fa-arrow-circle-down"></i> -->
+                      <i class="fa fa-info-circle"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td *ngIf="moreDetailToggle && (storeIndex == indx) " colspan="14">
+                    <table class="table table-hover table-striped table-sm">
+                      <thead class="thead-dark">
+
+                        <tr>
+                          <th>Middle Name </th>
+                          <th>Last Name</th>
+                          <th>Emergency Contact Number</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>{{data.middleName }}</td>
+                          <td>{{data.lastName}}</td>
+                          <td>{{data.emergencyContact}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+        <!--  pagination  -->
+        <mat-paginator *ngIf="dataFlag" class="paginator--centered mx-auto" [length]="total" [pageIndex]="page-1"
+          [pageSize]="pageSize" [pageSizeOptions]="[ 5,10, 25,50, 100]" (page)="changePage($event)">
+        </mat-paginator>
+      </div>
+    </div>
+  </div>
+</div>

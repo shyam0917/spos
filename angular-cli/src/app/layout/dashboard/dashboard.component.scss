@@ -1,0 +1,225 @@
+chart {
+  display: block;
+}
+
+.fullPage {
+  margin-top: 20px;
+}
+
+.modal {
+  text-align: center;
+  padding: 0 !important;
+}
+
+.modal::before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -4px;
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+
+/* dashboard box section start*/
+.dashboard-box {
+  margin-bottom: 40px;
+  ;
+}
+
+.dashboard-box .blue-box {
+  color: #0275d8;
+}
+
+.dashboard-box .green-box {
+  color: #5cb85c;
+}
+
+.dashboard-box .orange-box {
+  color: #f2b45c;
+}
+
+.dashboard-box .red-box {
+  color: #db5b57;
+}
+
+.dashboard-box .blue-arrow {
+  color: #0275d8;
+  font-size: 20px;
+}
+
+.dashboard-box .green-arrow {
+  color: #5cb85c;
+  font-size: 20px;
+}
+
+.dashboard-box .orange-arrow {
+  color: #f2b45c;
+  font-size: 20px;
+}
+
+.dashboard-box .red-arrow {
+  color: #db5b57;
+  font-size: 20px;
+}
+
+.dashboard-box .card {
+  border-radius: 20px;
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.07), 0 1px 5px rgba(0, 0, 0, 0.1);
+  margin: 0 10px;
+}
+
+.dashboard-box .card-box {
+  padding: 15px 20px;
+}
+
+.dashboard-box .card-footer {
+  background: none;
+}
+
+.dashboard-box .d-block {
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.dashboard-box .d-block-huge {
+  font-size: 25px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.dashboard-box .dashboard-icon {
+  padding-top: 10px;
+}
+
+/* dashboard box section end */
+
+
+/* graph section start */
+#transaction-graph {
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.07), 0 1px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  margin: 0 10px;
+  height: 396px;
+}
+
+#sales-graph {
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.07), 0 1px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  margin: 0 10px;
+  height: 396px;
+}
+
+.dashboard-graph {
+  margin-bottom: 40px;
+}
+
+/* graph section end */
+
+/* report section start */
+.all-reports {
+  text-align: center;
+}
+
+.all-reports .report-mainbox {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.07), 0 1px 5px rgba(0, 0, 0, 0.1);
+  margin: 20px 10px;
+  padding: 20px 10px;
+  min-height: 530px;
+}
+
+.all-reports .report-box {
+  background: #f3f5fd;
+  border-radius: 10px;
+  padding: 15px 10px;
+  font-size: 14px;
+  margin: 10px 5px;
+  min-height: 130px;
+}
+
+.all-reports .report-box a {
+  color: #000;
+}
+
+.all-reports .report-box img {
+  display: block;
+  margin: 10px auto;
+  opacity: 0.6;
+  width: 35px;
+}
+
+.all-reports .report-box a:hover {
+  text-decoration: none;
+}
+
+.all-reports h4 {
+  font-weight: bold;
+}
+
+.all-reports h5 {
+  font-weight: bold;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #c1c1c1;
+}
+
+/* report section end */
+
+
+@media screen and (min-device-width: 1025px) and (max-device-width: 1599px) {
+  .dashboard-box .d-block {
+    font-size: 14px;
+  }
+
+  .dashboard-icon {
+    width: 100%;
+  }
+
+  .all-reports .report-mainbox {
+    min-height: 555px;
+  }
+
+  .all-reports .report-box {
+    font-size: 12px;
+  }
+
+}
+
+@media screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+  .dashboard-box .card {
+    margin: 10px;
+  }
+
+  #transaction-graph {
+    margin: 0 10px 40px 10px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .dashboard-box .card {
+    margin: 10px;
+  }
+
+  #transaction-graph {
+    margin: 0 10px 40px 10px;
+  }
+
+  .all-reports .report-mainbox {
+    min-height: auto;
+  }
+}
+
+@media screen and (min-device-width: 1024px) and (max-device-width: 1365px) {
+  .all-reports .report-mainbox {
+    min-height: 525px !important;
+  }
+}
+
+.visible {
+  visibility: hidden;
+}

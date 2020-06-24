@@ -1,0 +1,39 @@
+<div class="banner-down">
+  <div class="row login-pos">
+    <div class="col-xl-7 col-lg-12 col-md-12 col-sm-12">
+      <div class="welcome-content">
+        <h1>Forget Password</h1>
+        <p>To keep connected with us please login with your personal information by email email address and password.</p>
+        <img src="assets/images/welcome.png" class="welcome-login" />
+      </div>
+    </div>
+    <div class="col-xl-5 col-lg-12 col-md-12 col-sm-12">
+      <div class="login-content">
+        <div class="main-logo">
+          <img src="assets/images/logo1.png" />
+        </div>
+        <!-- <form [formGroup]="loginForm" novalidate> -->
+        <form>
+          <div class="form-group">
+            <!-- <h4 class="tlloged">Enter your user email and we'll send<br />you a link over your email.</h4> -->
+            <input type="email" placeholder="Email" class="emailBox" name="email" [(ngModel)]="obj.email">
+          </div>
+          <div *ngIf="sendingMailInProcess" class="row">
+            <div class="col-sm-5">
+            </div>
+            <div class="col-sm-4">
+              <mat-spinner strokeWidth="5" [diameter]="40" color="warn" title="Sending Email"></mat-spinner>
+            </div>
+          </div>
+          <input type='submit' class='btn btn-success' id="finish" name='finish' value='Reset Password' [disabled]="sendingMailInProcess" (click)="forgetUser(obj)" />
+          <p style="color:#cd8c2f "><strong> {{resMsg}}</strong></p>
+          <!-- <div class=" orDown">
+                    <div class="lineklp"><span>OR</span></div>
+                  </div> -->
+          <div class="backbtnlg">
+            <a [routerLink]="['/login']" class="backbtnlgn">Back to Login Page</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

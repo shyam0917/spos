@@ -1,0 +1,490 @@
+<div class="login-page" [@routerTransition]>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card mb-3">
+        <div class="card-block table-responsive custom-product-table">
+          <span>
+            <button class="custom-add-product btn btn-primary pull-right" *ngIf="userRoleCheck('inventory','create')" (click)="openAddProductModal(add)">
+              <i class="fa fa-plus cursor-hover" aria-hidden="true"> Add Product</i>
+            </button>
+          </span>
+          <span class="searchButton">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Search product" [(ngModel)]="prodName" name=prodName (keyup)=checkSearchButton($event.target.value)>
+              <span class="input-group-btn">
+                <button class="btn btn-search" type="button" (click)=getAllProduct()><i class="fa fa-search fa-fw"></i> Search</button>
+              </span>
+            </div>
+          </span>
+          <span class="forSuccessMessage text-success" *ngIf="resultSuccessAdd">Product Updated Successfully</span>
+          <span *ngIf="resultSuccessUpdate" class="text-success">Product Updated Successfully</span>
+          <table *ngIf="(count>0)" class="table table-hover table-striped">
+            <thead class="thead-inverse">
+              <tr>
+                <th>Sno.</th>
+                <th>Product Name</th>
+                <th>Brand Name</th>
+                <th>Unit Price</th>
+                <th>Cost Price</th>
+                <th>HSN No.</th>
+                <th>Description</th>
+                <th>Constraints</th>
+                <th>GST ID</th>
+                <th>Category</th>
+                <th class="ExtraPadding">Discount(%)</th>
+                <th>Total Stock</th>
+                <th>Expiry Date</th>
+                <th *ngIf="userRoleCheck('inventory','update')">
+                  Edit
+                </th>
+                <th *ngIf="userRoleCheck('inventory','delete')">
+                  Delete
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let p_info of productInfo; index as i">
+                <td>{{p_info.pos}}</td>
+                <td>{{p_info.productName}}</td>
+                <td>{{p_info.brandName}}</td>
+                <td>{{p_info.unitPrice}}</td>
+                <td>{{p_info.costPrice}}</td>
+                <td>{{p_info.HSN_No}}</td>
+                <td>{{p_info.description}}</td>
+                <td>{{p_info.constrains}}</td>
+                <td>{{p_info.gst_ID}}</td>
+                <td>{{p_info.category}}</td>
+                <td>{{p_info.discount}}</td>
+                <td>{{p_info.totalstock}}</td>
+                <td>{{(p_info.expiryDate).slice(0,10)}}</td>
+                <td *ngIf="userRoleCheck('inventory','update')">
+                  <button type="button" (click)="openUpdateProductModal(update,p_info)" class="btn btn-primary">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                  </button>
+                </td>
+
+                <td *ngIf="userRoleCheck('inventory','delete')">
+                  <!-- <button type="button" class="btn btn-danger"><i class="fa fa-trash-o" (click)="deleteProduct(p_info)" aria-hidden="true"></i></button> -->
+                  <button class="btn btn-danger mb-2 mr-2" (click)="openDeleteProduct(productDelete, p_info)">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="count==0">
+    <h2>No related Product available</h2>
+  </div>
+
+  <!-- Delete Modal  03-august regan -->
+  <ng-template #productDelete let-c="close" let-d="dismiss">
+    Product <div class="modal-header">
+      <h4 class="modal-title">Product Delete</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>Are You Sure, You Want to Delete The "{{ productNameForDeleteModal }}"&nbsp; Product!.</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-light" (click)="c()">Yes</button>
+      <button type="button" class="btn btn-light" (click)="d()">No</button>
+    </div>
+  </ng-template>
+  <!-- /Delete Modal -->
+
+  <!-- modal for add product starts -->
+  <div class="row">
+    <div class="col-md-8">
+      <ng-template #add let-c="close" let-d="dismiss">
+        <div class="modal-header">
+
+          <!-- <h4 class="modal-title">Product</h4>      -->
+          <div>
+            <h4 class="modal-title" id="modal-basic-title">Product</h4>
+            <div class="custom-label">
+              <label>Category Type:
+                <label>{{categoryName}}</label>
+              </label>
+            </div>
+          </div>
+
+          <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+
+          <!-- <fieldset class="form-group ">
+                      
+          </fieldset> -->
+        </div>
+
+        <div class="modal-body">
+          <fieldset class="form-group">
+            <label>Search By:</label>
+            <label class="radio-inline">
+              <input type="radio" name="optradio" [checked]='true' (click)="searchTypeFn('cat')"> Category</label>
+            <label class="radio-inline">
+              <input type="radio" name="optradio" (click)="searchTypeFn('gst_id')"> GST_ID</label>
+            <label class="radio-inline">
+              <input type="radio" name="optradio" (click)="searchTypeFn('hsn_no')"> HSN_No</label>
+            <input class="form-control" name="searchBy" auto-complete [(ngModel)]="searchBy" [source]="searchArray" (blur)="searchByFlag = false" (ngModelChange)="searchGSTHSN(searchBy)" />
+            <hr>
+          </fieldset>
+
+          <br>
+          <fieldset class="custom-fileupload form-group">
+            <input class="wd-90" type="file" name="photo" (click)="onActionForPhotos()" ng2FileSelect [uploader]="photoUploader" />
+            <label class="wd-100">{{ uploadedProductImageName }}</label>
+          </fieldset>
+
+          <fieldset class="custom-fileupload form-group">
+            <input class="wd-90" type="file" name="file" (click)="onActionForFiles()" ng2FileSelect [uploader]="fileUploader" />
+            <label class="wd-100">{{ uploadedProductFileName }}</label>
+          </fieldset>
+
+          <div class="custom-fieldset">
+            <fieldset class="form-group">
+              <label>Subcategory</label>
+              <select class="form-control" name="subcategory_ID" [(ngModel)]="info.subcategory_ID" (blur)="subcategory_IDFlag = false">
+                <option *ngFor="let subcat of subcategoryData" [value]="subcat.subcategory_ID">{{subcat.subcategoryName}}</option>
+              </select>
+              <span *ngIf="(info.subcategory_ID == '' || info.subcategory_ID == undefined) && subcategory_IDFlag == false" class="text-danger">Field is required.</span>
+              <span *ngIf="subcategoryData.length == 0 " class="text-danger">Add Subcategory.</span>
+            </fieldset>
+
+            <fieldset class="form-group">
+              <label>Barcode Reader ID</label>
+              <input type="number" class="form-control" [(ngModel)]="info.barcodeReader_ID" (blur)="barcodeReader_IDFlag = false">
+              <span *ngIf="(info.barcodeReader_ID == '' || info.barcodeReader_ID == undefined) && barcodeReader_IDFlag == false" class="text-danger">Field is required.</span>
+              <span *ngIf="(info.barcodeReader_ID < 0) && barcodeReader_IDFlag == false" class="text-danger">Barcode Reader ID cannot be less than 0.</span>
+              <span *ngIf="(info.barcodeReader_ID == 0) && barcodeReader_IDFlag == false" class="text-danger">Barcode Reader ID can't be zero.</span>
+            </fieldset>
+
+            <fieldset class="form-group">
+              <label>Unit of Measurement</label>
+              <select class="form-control" [(ngModel)]="info.UOM_ID" (blur)="UOM_IDFlag = false">
+                <option *ngFor="let uom of uoms" [value]="uom.UOM_ID">{{uom.description}}</option>
+              </select>
+              <span *ngIf="(info.UOM_ID == '' || info.UOM_ID == undefined) && UOM_IDFlag == false" class="text-danger">Field is required.</span>
+            </fieldset>
+
+            <fieldset class="form-group">
+              <label>Product Name</label>
+              <input type="text" class="form-control" [(ngModel)]="info.productName" (blur)="checkValidation('prodName', info.productName)">
+              <span *ngIf="(info.productName == '' || info.productName == undefined) && productNameFlag == false" class="text-danger">Field is required.</span>
+              <span class="text-danger" *ngIf="validator['prodName']">Special chars not allowed</span>
+            </fieldset>
+
+            <fieldset class="form-group">
+              <label>Brand Name</label>
+              <input type="text" class="form-control" [(ngModel)]="info.brandName" (blur)="checkValidation('brandName', info.brandName)">
+              <span *ngIf="(info.brandName == '' || info.brandName == undefined) && brandNameFlag == false" class="text-danger">Field is required.</span>
+              <span class="text-danger" *ngIf="validator['brandName']">Special chars not allowed</span>
+            </fieldset>
+
+            <fieldset class="form-group">
+              <label>Description</label>
+              <input type="text" class="form-control" [(ngModel)]="info.description" (blur)="checkValidation('desc', info.description)">
+              <span *ngIf="(info.description == '' || info.description == undefined) && descriptionFlag == false" class="text-danger">Field is required.</span>
+              <span class="text-danger" *ngIf="validator['desc']">Special chars not allowed</span>
+            </fieldset>
+
+            <fieldset class="form-group">
+              <label>Constraints</label>
+              <input type="text" class="form-control" [(ngModel)]="info.constrains" (blur)="checkValidation('const', info.constrains)">
+              <span *ngIf="(info.constrains == '' || info.constrains == undefined) && constrainsFlag == false" class="text-danger">Field is required.</span>
+              <span class="text-danger" *ngIf="validator['const']">Special chars not allowed</span>
+            </fieldset>
+
+            <fieldset class="form-group">
+              <label>Unit Price</label>
+              <input type="number" class="form-control" [(ngModel)]="info.unitPrice" (blur)="unitPriceFlag = false">
+              <span *ngIf="(info.unitPrice == undefined) && unitPriceFlag == false" class="text-danger">Field is required.</span>
+              <span *ngIf="(info.costPrice > info.unitPrice) && unitPriceFlag == false && (info.unitPrice > 0)" class="text-danger">Unit Price cannot be less than Cost Price.</span>
+              <span *ngIf="(info.unitPrice < 0) && unitPriceFlag == false" class="text-danger">Unit Price cannot be less than 0.</span>
+            </fieldset>
+
+            <fieldset class="form-group">
+              <label>Cost Price</label>
+              <input type="number" class="form-control" [(ngModel)]="info.costPrice" (blur)="costPriceFlag = false">
+              <span *ngIf="(info.costPrice == undefined) && costPriceFlag == false" class="text-danger">Field is required.</span>
+              <span *ngIf="(info.costPrice > info.unitPrice) && costPriceFlag == false && (info.unitPrice > 0)" class="text-danger">Cost Price cannot be more than Unit Price.</span>
+              <span *ngIf="(info.costPrice < 0) && costPriceFlag == false" class="text-danger">Cost Price cannot be less than 0.</span>
+            </fieldset>
+
+            <fieldset class="form-group">
+              <label>Supplier ID</label>
+              <input type="number" class="form-control" [(ngModel)]="info.supplier_ID" (blur)="supplier_idFlag = false">
+              <span *ngIf="(info.supplier_ID == undefined) && supplier_idFlag == false" class="text-danger">Field is required.</span>
+              <span *ngIf="(info.supplier_ID <=0) && supplier_idFlag == false" class="text-danger">Supplier_Id should be greater than 0</span>
+            </fieldset>
+
+            <fieldset class="form-group">
+              <label>Discount</label>
+              <input type="number" class="form-control" [(ngModel)]="info.discount" (blur)="discountFlag = false">
+              <span *ngIf="(info.discount == undefined) && discountFlag == false" class="text-danger">Field is required.</span>
+              <span *ngIf="(info.discount < 0) && discountFlag == false" class="text-danger">Discount cannot be less than 0.</span>
+            </fieldset>
+            <!-- <div style="width: 100% !important;"> -->
+            <fieldset class="form-group">
+              <label>Total Stock</label>
+              <input type="number" class="form-control" [(ngModel)]="info.totalstock" (blur)="totalstockFlag = false">
+              <span *ngIf="(info.totalstock == undefined) && totalstockFlag == false" class="text-danger">Field is required.</span>
+              <span *ngIf="(info.totalstock < 1) && totalstockFlag == false" class="text-danger">Total Stock cannot be less than 1.</span>
+            </fieldset>
+            <fieldset class="form-group">
+              <label>Expiry Date</label>
+              <input type="date" class="form-control" [(ngModel)]="info.expirydate" (input)="onDateChange($event)">
+              <!-- <span *ngIf="(info.totalstock == undefined) && totalstockFlag == false" class="text-danger">Field is required.</span> -->
+              <!-- <span *ngIf="(info.totalstock < 1) && totalstockFlag == false" class="text-danger">Total Stock cannot be less than 1.</span> -->
+            </fieldset>
+           
+            <!-- </div> -->
+            <hr>
+             <div *ngIf="(dateMessage==true) "class="text-danger">
+              Expiry date can't be less than today.
+            </div>
+            <div>
+              <fieldset class="form-group">
+                <label>Category: &nbsp;</label>
+                <label>{{info.category}}</label>
+                <br>
+                <span *ngIf="(info.category == undefined)" class="text-danger">Field is required.</span>
+              </fieldset>
+
+              <fieldset class="form-group">
+                <label>HSN No: &nbsp;</label>
+                <label>{{info.HSN_No}}</label>
+                <br>
+                <span *ngIf="(info.HSN_No == undefined)" class="text-danger">Field is required.</span>
+              </fieldset>
+
+              <fieldset class="form-group">
+                <label>GST ID: &nbsp;</label>
+                <label>{{info.gst_ID}}</label>
+                <br>
+                <span *ngIf="(info.gst_ID == undefined)" class="text-danger">Field is required.</span>
+              </fieldset>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <!-- edited by regan 01-august -->
+          <span *ngIf="resultSuccessAdd" class="text-success">Product Added Successfully</span>
+          <button class="btn btn-primary" [disabled]="(info.costPrice == undefined) ||(dateMessage)|| (info.totalstock < 1) || (info.discount < 0) || (info.costPrice < 0) || (info.costPrice > info.unitPrice) || (info.unitPrice < 0) || (info.barcodeReader_ID == 0) || (info.barcodeReader_ID < 0) || (info.barcodeReader_ID == '' || info.barcodeReader_ID == undefined) || (info.UOM_ID == '' || info.UOM_ID == undefined) || (info.productName == '' || info.productName == undefined) || (info.brandName == '' || info.brandName == undefined) || (info.description == '' || info.description == undefined) || (info.constrains == '' || info.constrains == undefined) || (info.unitPrice == undefined) || (info.category == undefined) || (info.HSN_No == undefined) || (info.gst_ID == undefined) || (info.supplier_ID == undefined) || (info.discount == undefined) || (info.totalstock == undefined) || validator['prodName'] || validator['const'] || validator['desc'] || validator['brandName']" (click)="c(addProduct(info,false))">Add </button>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+  <!-- modal for add product ends -->
+
+  <!-- modal for update product starts -->
+  <div class="row">
+    <div class="col-md-8">
+      <ng-template #update let-c="close" let-d="dismiss">
+        <div class="modal-header">
+          <div>
+            <h4 class="modal-title" id="modal-basic-title">Product update</h4>
+            <div class="custom-label">
+              <label>Category Type:
+                <label>{{categoryName}}</label>
+              </label>
+            </div>
+          </div>
+
+          <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <fieldset class="form-group">
+            <label>Search By:</label>
+            <label class="radio-inline">
+              <input type="radio" name="optradio" [checked]='true' (click)="searchTypeFn('cat')"> Category
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="optradio" (click)="searchTypeFn('gst_id')"> GST_ID
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="optradio" (click)="searchTypeFn('hsn_no')"> HSN_No
+            </label>
+            <input class="form-control" name="searchBy" auto-complete [(ngModel)]="searchBy" [source]="searchArray" (blur)="searchByFlag = false" (ngModelChange)="searchGSTHSN(searchBy)" />
+            <hr>
+          </fieldset>
+
+          <br>
+          <fieldset class="form-group">
+            <label>Product ID: &nbsp;&nbsp;
+              <label>{{ info.product_ID }}</label>
+            </label>
+          </fieldset>
+
+          <fieldset class="custom-fileupload form-group">
+            <input class="wd-90" type="file" name="photo" (click)="onActionForPhotos()" ng2FileSelect [uploader]="photoUploader" />
+            <label class="wd-100">{{ uploadedProductImageName ? uploadedProductImageName : info.image_path }}</label>
+          </fieldset>
+
+          <fieldset class="custom-fileupload form-group">
+            <input class="wd-90" type="file" name="file" (click)="onActionForFiles()" ng2FileSelect [uploader]="fileUploader" />
+            <label class="wd-100">{{ uploadedProductFileName }}</label>
+          </fieldset>
+
+          <!-- <fieldset class="form-group">
+            <input type="file" name="photo" (click)="onAction()" ng2FileSelect [uploader]="uploader"/>
+            <label>{{ info.image_path }}</label>
+          </fieldset> -->
+
+          <div class="custom-fieldset">
+            <fieldset class="form-group">
+              <label>Subcategory</label>
+
+              <select class="form-control" name="subcategory_ID" [(ngModel)]="info.subcategory_ID">
+                <option *ngFor="let subcat of subcategoryData" [value]="subcat.subcategory_ID">{{subcat.subcategoryName}}</option>
+              </select>
+            </fieldset>
+
+            <!-- <fieldset class="form-group">
+            <label>Product ID</label>
+            <input type="text" class="form-control" [(ngModel)]="info.product_ID" (blur)="product_IDFlag = false">
+            <span *ngIf="(info.product_ID == '' || info.product_ID == undefined) && product_IDFlag == false" class="text-danger">Field is required.</span>
+          </fieldset> -->
+
+            <!-- <br> -->
+            <!-- <fieldset class="form-group">
+            <label>Product ID: &nbsp;&nbsp;
+              <label>"{{ info.product_ID }}"</label>
+            </label>
+          </fieldset> -->
+
+            <fieldset class="form-group">
+              <label>Barcode Reader ID</label>
+              <input type="number" class="form-control" [(ngModel)]="info.barcodeReader_ID" (blur)="barcodeReader_IDFlag = false">
+              <span *ngIf="(info.barcodeReader_ID == '' || info.barcodeReader_ID == undefined) && barcodeReader_IDFlag == false" class="text-danger">Field is required.</span>
+              <span *ngIf="(info.barcodeReader_ID < 0) && barcodeReader_IDFlag == false" class="text-danger">Cannot be less than 0.</span>
+              <span *ngIf="(info.barcodeReader_ID == 0) && barcodeReader_IDFlag == true" class="text-danger">Cannot be 0</span>
+            </fieldset>
+
+            <fieldset class="form-group">
+              <label>Unit of Measurement</label>
+              <select class="form-control" [(ngModel)]="info.UOM_ID" (blur)="UOM_IDFlag = false">
+                <option *ngFor="let uom of uoms" [value]="uom.UOM_ID">{{uom.description}}</option>
+              </select>
+              <span *ngIf="(info.UOM_ID == '' || info.UOM_ID == undefined) && UOM_IDFlag == false" class="text-danger">Field is required.</span>
+            </fieldset>
+
+            <fieldset class="form-group">
+              <label>Product Name</label>
+              <input type="text" class="form-control" [(ngModel)]="info.productName" (blur)="productNameFlag = false">
+              <span *ngIf="(info.productName == '' || info.productName == undefined) && productNameFlag == false" class="text-danger">Field is required.</span>
+            </fieldset>
+
+            <fieldset class="form-group">
+              <label>Brand Name</label>
+              <input type="text" class="form-control" [(ngModel)]="info.brandName" (blur)="brandNameFlag = false">
+              <span *ngIf="(info.brandName == '' || info.brandName == undefined) && brandNameFlag == false" class="text-danger">Field is required.</span>
+            </fieldset>
+
+            <fieldset class="form-group">
+              <label>Description</label>
+              <input type="text" class="form-control" [(ngModel)]="info.description" (blur)="descriptionFlag = false">
+              <span *ngIf="(info.description == '' || info.description == undefined) && descriptionFlag == false" class="text-danger">Field is required.</span>
+            </fieldset>
+
+            <fieldset class="form-group">
+              <label>Constraints</label>
+              <input type="text" class="form-control" [(ngModel)]="info.constrains" (blur)="constrainsFlag = false">
+              <span *ngIf="(info.constrains == '' || info.constrains == undefined) && constrainsFlag == false" class="text-danger">Field is required.</span>
+            </fieldset>
+
+            <fieldset class="form-group">
+              <label>Unit Price</label>
+              <input type="number" class="form-control" [(ngModel)]="info.unitPrice" (blur)="unitPriceFlag = false">
+              <span *ngIf="(info.unitPrice == undefined) && unitPriceFlag == false" class="text-danger">Field is required.</span>
+              <span *ngIf="(info.costPrice > info.unitPrice) && unitPriceFlag == false && (info.unitPrice > 0)" class="text-danger">Unit Price cannot be less than Cost Price.</span>
+              <span *ngIf="(info.unitPrice < 0) && unitPriceFlag == false" class="text-danger">Unit Price cannot be less than 0.</span>
+            </fieldset>
+
+            <fieldset class="form-group">
+              <label>Cost Price</label>
+              <input type="number" class="form-control" [(ngModel)]="info.costPrice" (blur)="costPriceFlag = false">
+              <span *ngIf="(info.costPrice == undefined) && costPriceFlag == false" class="text-danger">Field is required.</span>
+              <span *ngIf="(info.costPrice > info.unitPrice) && costPriceFlag == false && (info.unitPrice > 0)" class="text-danger">Cost Price cannot be more than Unit Price.</span>
+              <span *ngIf="(info.costPrice < 0) && costPriceFlag == false" class="text-danger">Cost Price cannot be less than 0.</span>
+            </fieldset>
+
+            <fieldset class="form-group">
+              <label>Supplier ID</label>
+              <input type="number" class="form-control" [(ngModel)]="info.supplier_ID" (blur)="supplier_idFlag = false">
+              <span *ngIf="(info.supplier_ID == undefined) && supplier_idFlag == false" class="text-danger">Field is required.</span>
+              <span *ngIf="(info.supplier_ID <=0) && supplier_idFlag == false" class="text-danger">Supplier_Id should be greater than 0</span>
+            </fieldset>
+
+            <fieldset class="form-group">
+              <label>Discount</label>
+              <input type="number" class="form-control" [(ngModel)]="info.discount" (blur)="discountFlag = false">
+              <span *ngIf="(info.discount == undefined) && discountFlag == false" class="text-danger">Field is required.</span>
+              <span *ngIf="(info.discount < 0) && discountFlag == false" class="text-danger">Discount cannot be less than 0.</span>
+            </fieldset>
+
+            <fieldset class="form-group">
+              <label>Total Stock</label>
+              <input type="number" class="form-control" [(ngModel)]="info.totalstock" (blur)="totalstockFlag = false">
+              <span *ngIf="(info.totalstock == undefined) && totalstockFlag == false" class="text-danger">Field is required.</span>
+              <span *ngIf="(info.totalstock < 1) && totalstockFlag == false" class="text-danger">Total Stock cannot be less than 1.</span>
+            </fieldset>
+
+            <div>
+              <fieldset class="form-group">
+                <label>Category: &nbsp;</label>
+                <label>{{info.category}}</label>
+                <br>
+                <span *ngIf="(info.category == undefined)" class="text-danger">Field is required.</span>
+              </fieldset>
+
+              <fieldset class="form-group">
+                <label>HSN No: &nbsp;</label>
+                <label>{{info.HSN_No}}</label>
+                <br>
+                <span *ngIf="(info.HSN_No == undefined)" class="text-danger">Select Categ/GST_ID/HSN_No.</span>
+              </fieldset>
+
+              <fieldset class="form-group">
+                <label>GST ID: &nbsp;</label>
+                <label>{{info.gst_ID}}</label>
+                <br>
+                <span *ngIf="(info.gst_ID == undefined)" class="text-danger">Select Categ/GST_ID/HSN_No.</span>
+              </fieldset>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <!-- edited by regan 02-august -->
+          <span *ngIf="resultSuccessUpdate" class="text-success">Product Updated Successfully</span>
+          <button class="btn btn-primary" [disabled]="(info.costPrice == undefined) || (info.totalstock < 1) || (info.discount < 0) || (info.costPrice < 0) || (info.costPrice > info.unitPrice) || (info.unitPrice < 0) || (info.barcodeReader_ID == 0) || (info.barcodeReader_ID < 0) || (info.barcodeReader_ID == '' || info.barcodeReader_ID == undefined) || (info.UOM_ID == '' || info.UOM_ID == undefined) || (info.productName == '' || info.productName == undefined) || (info.brandName == '' || info.brandName == undefined) || (info.description == '' || info.description == undefined) || (info.constrains == '' || info.constrains == undefined) || (info.unitPrice == undefined) || (info.category == undefined) || (info.HSN_No == undefined) || (info.gst_ID == undefined) || (info.supplier_ID == undefined) || (info.discount == undefined) || (info.totalstock == undefined)" (click)="c(addProduct(info,true))">Update </button>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+  <!-- modal for update product ends -->
+
+</div>
+
+
+<!-- <div style="float: right; margin-right: 1rem;">
+  <div class="pagination">
+    <a (click)="goBackward()">&laquo;</a>
+    <a (click)="forwardPage()">&raquo;</a>
+  </div>
+</div> -->
+<div *ngIf="(count>0)">
+  <mat-paginator class="paginator--centered mx-auto" [length]="count" [pageSize]="limit" [pageSizeOptions]="[5, 10, 25, 50, 100]" (page)="handlePage($event)">
+  </mat-paginator>
+</div>

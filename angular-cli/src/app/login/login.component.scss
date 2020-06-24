@@ -1,0 +1,210 @@
+$topnav-background-color:#c8fffc;
+
+:host {
+    display: block;
+}
+
+.login-page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: auto;
+    background: $topnav-background-color;
+    text-align: center;
+    color: #000;
+    overflow: hidden;
+
+    .col-lg-4 {
+        padding: 0;
+    }
+
+    .input-lg {
+        height: 55px;
+        padding: 10px 16px;
+        font-size: 18px;
+        line-height: 1.3333333;
+        border-radius: 0;
+    }
+
+    .input-underline {
+        border: none;
+        box-shadow: none;
+        border-bottom: 2px solid rgba(255, 255, 255, .5);
+        color: #000;
+        border-radius: 10px !important;
+        font-family: 'futurabook';
+        font-size: 22px;
+    }
+
+    .input-underline:focus {
+        border-bottom: 2px solid #fff;
+        box-shadow: none;
+    }
+
+    .rounded-btn {
+        border-radius: 10px;
+        color: rgba(255, 255, 255, 1);
+        background: #c8fffc;
+        font-size: 20px;
+        font-family: 'futurabook';
+        font-weight: bold;
+        line-height: 50px;
+        width: 100%;
+        background: #000;
+        padding: 0 25px;
+        text-transform: uppercase;
+    }
+
+    .rounded-btn:hover,
+    .rounded-btn:focus,
+    .rounded-btn:active,
+    .rounded-btn:visited {
+        color: rgba(255, 255, 255, 1);
+        outline: none;
+    }
+
+    h1 {
+        font-weight: 300;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        font-size: 36px;
+
+        small {
+            color: rgba(255, 255, 255, 0.7);
+        }
+    }
+
+    .form-group {
+        padding: 5px 0;
+        text-align: left;
+        font-size: 22px;
+        font-weight: bold;
+
+        input::-webkit-input-placeholder {
+            color: rgba(255, 255, 255, 0.6) !important;
+        }
+
+        input:-moz-placeholder {
+            /* Firefox 18- */
+            color: rgba(255, 255, 255, 0.6) !important;
+        }
+
+        input::-moz-placeholder {
+            /* Firefox 19+ */
+            color: rgba(255, 255, 255, 0.6) !important;
+        }
+
+        input:-ms-input-placeholder {
+            color: rgba(255, 255, 255, 0.6) !important;
+        }
+    }
+
+    .form-content {
+        padding: 40px 0 0 0;
+    }
+}
+
+@font-face {
+    font-family: 'futuramedium';
+    src: url('../../assets/fonts/futura_medium_bt-webfont.woff2') format('woff2'),
+        url('../../assets/fonts/futura_medium_bt-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'futurabook';
+    src: url('../../assets/fonts/futura_book_font-webfont.woff2') format('woff2'),
+        url('../../assets/fonts/futura_book_font-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.login-page .login-pos {
+    align-items: center;
+    ;
+}
+
+.login-page .welcome-content {
+    padding: 70px 0 0 70px;
+    background: #fff;
+    text-align: left;
+    min-height: 900px;
+    border-radius: 0px 70px 70px 0;
+}
+
+.login-page .welcome-content h1 {
+    padding: 10px 0;
+    font-size: 50px;
+    font-family: 'futuramedium';
+}
+
+.login-page .welcome-content p {
+    font-size: 25px;
+    width: 65%;
+    font-family: 'futurabook';
+}
+
+.login-page .welcome-content .welcome-login {
+    margin-top: 100px;
+    width: 71%;
+}
+
+.login-page .login-content {
+    width: 60%;
+    margin: auto;
+}
+
+.forget-pwd {
+    text-align: center !important;
+}
+
+.forget-pwd a {
+
+    font-weight: 500;
+}
+
+.login-content label {
+    font-family: 'futurabook';
+}
+
+@media screen and (min-device-width: 1025px) and (max-device-width: 1599px) {
+    .login-page .welcome-content .welcome-login {
+        position: absolute;
+        bottom: 0;
+    }
+
+    .login-page {
+        overflow-y: auto;
+    }
+}
+
+@media screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    .login-page .welcome-content {
+        display: none;
+    }
+
+    .login-page .login-content {
+        margin-top: 150px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .login-page .welcome-content {
+        display: none;
+    }
+
+    .login-page .login-content {
+        margin-top: 100px;
+    }
+
+    .login-page .login-content img {
+        width: 70%;
+    }
+
+    .login-page .login-content {
+        width: 80%;
+    }
+}

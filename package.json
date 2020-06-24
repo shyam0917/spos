@@ -1,0 +1,40 @@
+{
+  "name": "expressdemo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "server": "nodemon app",
+    "client": "npm run start --prefix angular-cli",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "atob": "^2.1.2",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.2",
+    "btoa": "^1.2.1",
+    "cookie-parser": "^1.4.3",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "debug": "^4.1.1",
+    "dotenv": "^8.2.0",
+    "ejs": "^2.7.4",
+    "exec-php": "0.0.5",
+    "express": "^4.14.0",
+    "fs": "0.0.1-security",
+    "g": "^2.0.1",
+    "js-sha512": "^0.8.0",
+    "jsonwebtoken": "^8.0.1",
+    "moment": "^2.24.0",
+    "morgan": "^1.9.1",
+    "multer": "^1.3.1",
+    "mysql": "^2.14.1",
+    "nodemailer": "*",
+    "request": "^2.88.0",
+    "url": "^0.11.0",
+    "uuid": "^3.3.3"
+  }
+}

@@ -1,0 +1,87 @@
+.fieldset {
+  width: 23%;
+  float: left;
+  margin-right: 10px;
+  margin-top: 15px;
+  max-height: 60px !important;
+}
+
+.set-up {
+  margin-top: 14px;
+}
+
+
+mat-paginator.mat-paginator.paginator--centered {
+  display: flex;
+  justify-content: center;
+  width: fit-content;
+  color: white;
+  font-size: 15px;
+  font-family: "Open Sans", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+::ng-deep .mat-option-text {
+  color: white !important;
+}
+
+::ng-deep .mat-select-arrow {
+  color: white !important;
+}
+
+::ng-deep .mat-form-field-infix,
+.mat-form-field-ripple {
+  color: white !important;
+}
+
+::ng-deep .mat-form-field-ripple {
+  background-color: white !important;
+}
+
+.close {
+  color: #d9534f;
+  font-size: 36px;
+  outline: none;
+  opacity: 1;
+  width: 46px;
+}
+
+
+fieldset {
+  width: 50%;
+  float: left;
+  padding: 0.5em;
+}
+
+fieldset:nth-child(odd) {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.thisRequired::before {
+  content: "*";
+  color: red;
+}
+
+.forError {
+  float: left;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+.addButton {
+  margin-top: -29px !important;
+  margin-bottom: 10px !important;
+}
+
+.hsn_table {
+  max-height: 400px;
+  display: block;
+  overflow-y: auto;
+}

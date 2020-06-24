@@ -1,0 +1,130 @@
+<div class="login-page" [@routerTransition]>
+    <div class="row">
+        <div class="col-md-4 push-md-4">
+            <img class="user-avatar" src="assets/images/logo.png" width="150px" />
+            <h1>Super Admin Tool</h1>
+            <!-- <form role="form"> -->
+            <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" autocomplete="off">
+                <div class="form-content">
+                    <!-- <div class="form-group">
+                        <input type="number" class="form-control input-underline input-lg" placeholder="StoreId" formControlName="p_store_ID" (blur)="setStoreId($event.target.value)">
+                    </div> -->
+                    <div>
+                        <select class="form-control" formControlName="p_store_ID" (change)="setStoreId($event.target.value)">
+                            <option value="" disabled selected hidden>Select Store_Id</option>
+                            <option value={{storeId.store_ID}} *ngFor="let storeId of allStoreIds">{{storeId.store_ID}}</option>
+                        </select>
+                    </div>
+                    <span *ngIf="profileForm.controls['p_store_ID'].errors && profileForm.controls['p_store_ID'].touched">
+                        <small class="text-danger" *ngIf="profileForm.controls['p_store_ID'].errors.required">Store_ID is required</small>
+                    </span>
+                    <span *ngIf="profileForm.controls['p_store_ID'].value < 0">
+                        <small class="text-danger">Store_ID can not be -Ve</small>
+                    </span>
+                    <div class="form-group" hidden="true">
+                        <!-- <label>Role</label> -->
+                        <select class="form-control" formControlName="p_role">
+                            <option selected disabled hidden value="SADM">Super Admin</option>
+                            <!-- <option value="ADM">Admin</option>
+                            <option value="ACM">Account Manager</option>
+                            <option value="STRADM">Store Admin</option>
+                            <option value="STRMAG">Store Manager</option>
+                            <option value="STRUSR">Store User</option>
+                            <option value="SYSUSR">System User</option> -->
+                        </select>
+                    </div>
+                    <span *ngIf="profileForm.controls['p_role'].errors && profileForm.controls['p_role'].touched">
+                        <small class="text-danger" *ngIf="profileForm.controls['p_role'].errors.required">Select Role </small>
+                    </span>
+                    <div class="form-group">
+                        <input type="text" class="form-control input-underline input-lg" placeholder="First Name" formControlName="p_firstName">
+                    </div>
+                    <span *ngIf="profileForm.controls['p_firstName'].errors && profileForm.controls['p_firstName'].touched">
+                        <small class="text-danger" *ngIf="profileForm.controls['p_firstName'].errors.required">Firstname is required</small>
+                    </span>
+                    <span *ngIf="profileForm.controls['p_firstName'].errors && profileForm.controls['p_firstName'].touched">
+                        <small class="text-danger" *ngIf="profileForm.controls['p_firstName'].errors.pattern">Only Alphabets are allowed</small>
+                    </span>
+                    <!-- {{profileForm.controls['p_firstName'].value}} -->
+                    <div class="form-group">
+                        <input type="text" class="form-control input-underline input-lg" placeholder="Middle Name" formControlName="p_middleName">
+                    </div>
+                    <span *ngIf="profileForm.controls['p_middleName'].errors && profileForm.controls['p_middleName'].touched">
+                        <small class="text-danger" *ngIf="profileForm.controls['p_middleName'].errors.pattern">Only Alphabets are allowed</small>
+                    </span>
+                    <div class="form-group">
+                        <input type="text" class="form-control input-underline input-lg" placeholder="Last Name" formControlName="p_lastName">
+                    </div>
+                    <span *ngIf="profileForm.controls['p_lastName'].errors && profileForm.controls['p_lastName'].touched">
+                        <small class="text-danger" *ngIf="profileForm.controls['p_lastName'].errors.pattern">Only Alphabets are allowed</small>
+                    </span>
+                    <div class="form-group">
+                        <input type="text" class="form-control input-underline input-lg" id="" placeholder="Email" class="form-control input-underline input-lg" formControlName="p_email" (blur)="checkEmail($event.target.value)">
+                    </div>
+                    <!-- {{profileForm.controls['p_email'].errors|json}} -->
+                    <p ion-text *ngIf="emailPermit" class="text-danger" padding-left>
+                        This email address exist, try another email address and try again.
+                    </p>
+                    <span *ngIf="profileForm.controls['p_email'].errors && profileForm.controls['p_email'].touched">
+                        <small class="text-danger" *ngIf="profileForm.controls['p_email'].errors.required">Email is required</small>
+                        <small class="text-danger" *ngIf="profileForm.controls['p_email'].errors.pattern && profileForm.controls['p_email'].touched">Not a valid Email</small>
+                        <!-- <small class="text-danger" *ngIf="emailStatus && profileForm.controls['p_email'] != ''&& emailStatus && profileForm.controls['p_email'] != undefined ">Not a valid Email</small> -->
+                    </span>
+                    <div class="form-group">
+                        <input type="text" class="form-control input-underline input-lg" formControlName="p_userName" placeholder="User Name" (blur)="checkUserName($event.target.value)" autocomplete="off">
+                    </div>
+                    <p *ngIf="userNamePermit" ion-text class="text-danger" padding-left>
+                        This UserName exist, please try another.
+                    </p>
+                    <span *ngIf="profileForm.controls['p_userName'].errors && profileForm.controls['p_userName'].touched">
+                        <small class="text-danger" *ngIf="profileForm.controls['p_userName'].errors.required">UserName is required</small>
+                    </span>
+
+                    <div class="form-group">
+                        <input type="password" class="form-control input-underline input-lg" formControlName="p_password" placeholder="Password" autocomplete="new-password">
+                    </div>
+                    <span *ngIf="profileForm.controls['p_password'].errors && profileForm.controls['p_password'].touched">
+                        <small class="text-danger" *ngIf="profileForm.controls['p_password'].errors.required">Password is required</small>
+                    </span>
+                    <!-- <div class="form-group">
+                        <input type="number" class="form-control input-underline input-lg" formControlName="p_mobile" placeholder="Phone Number">
+                    </div>
+                    {{profileForm.controls['p_mobile'].value}}
+                    {{profileForm.controls['p_mobile'].error}}
+                    <span>
+                        <small class="text-danger" *ngIf="profileForm.controls['p_mobile'].errors.required && profileForm.controls['p_mobile'].touched">Mobile is required</small>
+                        <small class="text-danger" *ngIf="profileForm.controls['p_mobile'].errors.min && profileForm.controls['p_mobile'].touched">Min 10 digit</small>
+                        <small class="text-danger" *ngIf="profileForm.controls['p_mobile'].errors.max && profileForm.controls['p_mobile'].touched">Max 10 digit</small>
+                    </span> -->
+                    <div class="form-group">
+                        <input type="number" class="form-control input-underline input-lg" formControlName="p_mobile" placeholder="Mobile Number">
+                    </div>
+                    <span *ngIf="profileForm.controls['p_mobile'].errors">
+                        <small class="text-danger" *ngIf="profileForm.controls['p_mobile'].errors.required && profileForm.controls['p_mobile'].touched">Mobile is required</small>
+                        <small class="text-danger" *ngIf="profileForm.controls['p_mobile'].errors.min && profileForm.controls['p_mobile'].touched">Min 10 digit</small>
+                        <small class="text-danger" *ngIf="profileForm.controls['p_mobile'].errors.max && profileForm.controls['p_mobile'].touched">Max 10 digit</small>
+                    </span>
+
+                    <div class="form-group">
+                        <input type="number" class="form-control input-underline input-lg" formControlName="p_emergencyContact" placeholder="Emergency Contact Number">
+                    </div>
+                    <span *ngIf="profileForm.controls['p_emergencyContact'].errors">
+                        <small class="text-danger" *ngIf="profileForm.controls['p_emergencyContact'].errors.required && profileForm.controls['p_emergencyContact'].touched">Contact is required</small>
+                        <small class="text-danger" *ngIf="profileForm.controls['p_emergencyContact'].errors.min && profileForm.controls['p_emergencyContact'].touched">Min 10 digit</small>
+                        <small class="text-danger" *ngIf="profileForm.controls['p_emergencyContact'].errors.max && profileForm.controls['p_emergencyContact'].touched">Max 10 digit</small>
+                    </span>
+                </div>
+                <div class="text-danger" *ngIf="message">
+                    Successfully Registered
+                </div>
+                <!-- <button type="submit" [disabled]="!profileForm.valid">Submit</button> -->
+                <!-- <a type="submit" class="btn rounded-btn" [routerLink]="['/login']"> Register </a>&nbsp; -->
+                <button class="btn rounded-btn" type="submit" [disabled]="!profileForm.valid || userNamePermit">Submit</button>
+
+                <a class="btn rounded-btn buttonsSpace" [routerLink]="['/login']"> Cancel </a>
+            </form>
+
+
+        </div>
+    </div>
+</div>

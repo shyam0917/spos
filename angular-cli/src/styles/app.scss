@@ -1,0 +1,31 @@
+/* You can add global styles to this file, and also import other style files */
+@import "bootstrap/bootstrap";
+@import "spinner";
+@import "utils";
+@import "rtl";
+@import "responsive";
+
+.table td,
+th {
+    text-align: center;
+}
+
+.ngui-auto-complete ul {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.paginator--centered {
+    margin-top: 30px !important;
+}
+
+.pos_table {
+    max-height: 470px;
+    display: block;
+    overflow-y: scroll;
+}
+
+
+body {
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
