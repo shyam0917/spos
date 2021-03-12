@@ -40,7 +40,7 @@
     "hammerjs": "^2.0.8",
     "highcharts": "*",
     "install": "^0.13.0",
-    "jspdf": "^1.5.3",
+    "jspdf": "^2.3.1",
     "ng-http-loader": "^5.1.0",
     "ng2-charts": "2.2.3",
     "ng2-file-upload": "*",
